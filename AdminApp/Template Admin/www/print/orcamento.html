@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Impressão Orçamento</title>
+	<meta charset="utf-8">
+
+	<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+
+	<table width="100%">
+		<tr>
+			<td width="50%">
+				<table width="100%" style="border-style: solid;">
+					<tr>
+						<td align="center" width="100%">
+							<img src="" id="imagemLogo" width="20%">
+						</td>
+					</tr>
+					<tr>
+						<td align="center" class="fontMenor" id='nomeEmpresa'></td>
+					</tr>
+					<tr>
+						<td align="center" class="fontMenor" id="enderecoEmpresa"></td>
+					</tr>
+					<tr>
+						<td align="center" class="fontMenor" id="enderec2Empresa"></td>
+					</tr>
+					<tr>
+						<td align="center" class="fontMenor" id="contatoEmpresa"></td>
+					</tr>
+				</table>
+			</td>
+			<td width="50%">
+				<table width="100%">
+					<tr>
+						<td width="100%">
+							<h2>Orçamento: N°<span id="numDocumento"></span></h2>
+						</td>
+					<tr>
+					</tr>
+						<td>
+							<h2>Emissão: <span id="emissao"></span></h2>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+	<table width="100%">
+		<tr>
+			<td width="50%">
+				<table width="100%">
+					<tr>
+						<td colspan='2' style="border-bottom-style: solid;">
+							<h2 style="margin: 0">Dados do Cliente</h2>
+						</td>
+					</tr>
+					<tr>
+						<td class="fontMenor"><b>Nome:</b></td>
+						<td id="nomeCliente" class="fontMenor"></td>
+					</tr>
+					<tr>
+						<td class="fontMenor"><b>Telefone: </b></td>
+						<td id="telefoneCliente" class="fontMenor"></td>
+					</tr>
+					<tr>
+						<td class="fontMenor"><b>Contato:</b></td>
+						<td id="contatoCliente" class="fontMenor"></td>
+					</tr>
+				</table>
+			</td>
+			<td width="50%">
+				<table width="100%">
+					<tr>
+						<td colspan="2" style="border-bottom-style: solid;">
+							<h2 style="margin: 0">Local de Entrega</h2>
+						</td>
+					</tr>
+					<tr>
+						<td class="fontMenor"><b>Enderecço</b></td>
+						<td class="fontMenor" id="endereco"></td>
+					</tr>
+					<tr>
+						<td class="fontMenor"><b>Bairro</b></td>
+						<td class="fontMenor" id="bairro"></td>
+					</tr>
+					<tr>
+						<td class="fontMenor"><b>Cidade - UF</b></td>
+						<td class="fontMenor" id="cidadeEstado"></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+	<style type="text/css">
+		.fontMenor{
+			font-size: 12px;
+		}
+	</style>
+
+	<h2 style='margin-bottom: 0;border-bottom-style: solid;'>Produtos</h2>
+	<div id='contudoProduto'>
+		<!-- <table width="100%">
+			<tr>
+				<td><b>Descrição</b></td>
+				<td><b>Quantidade</b></td>
+				<td><b>Valor Unitario</b></td>
+				<td><b>Valor Total</b></td>
+			</tr>
+
+			<tr>
+				<td>0 - Teste</td>
+				<td>123 - KG</td>
+				<td>R$ 4,50</td>
+				<td>R$ 553,50</td>
+			</tr>
+
+			<tr>
+				<td align="right" style="border-top-style: solid;" colspan="3"><b>Total: </b></td>
+				<td style="border-top-style: solid;">R$ 553,50</td>
+			</tr>
+		</table> -->
+	</div>
+
+
+
+
+	<h2 style="margin-bottom: 0;border-bottom-style: solid;">Codições Gerais</h2>
+	<table width="100%">
+		<tr>
+			<td><b>Forma de Pagamento: </b></td>
+			<td id="formaPagamento"></td>
+		</tr>
+		<tr>
+			<td><b>Observações: </b></td>
+			<td id="observacoa"></td>
+		</tr>
+
+	</table>
+
+
+
+	<h2 style="margin-bottom: 0;border-bottom-style: solid;">Obsevações: leia com a atenção</h2>
+	<p style="margin: 0;">
+		- Não há devolução após aprovação, portanto e necessária a conferência pelo cliente de todas as medidas e itens aqui descriminados.
+	</p>
+	<p style="margin: 0;">
+		- Alterações por parte do cliente estão sujeitas a revisão no orçamento e/ou cobrança de perda de material, inclusive prorrogação no prazo de entrega.
+	</p>
+	<p style="margin: 0;">
+		- ORÇAMENTOS DE PROJETO SÃO FEITOS COM BASE NO RESUMO DO AÇO, SUJEITO A CONFERÊNCIA APÓS APROVAÇÃO.
+	</p>
+	<p style="margin: 0;">
+		- Entregas realizadas e não recebidas por imprevistos do cliente estão sujeitas a cobrança adicional de novo frete.
+	</p>
+	<p style="margin: 0;">
+		- A entrega será efetuada no decorrer do dia agendado. Não é possível prever ou agendar horário.
+	</p>
+	<p style="margin: 0;">
+		- Não entregamos em estrada de terra sem aviso prévio.
+	</p>
+	<p style="margin: 0;">
+		- O material não pode ser descarregado no segundo andar pois risco de choque elétrico;
+	</p>
+	<p style="margin: 0;">
+		- Descarga por conta do cliente, motorista e ajudantes estarão a disposição para orientar.
+	</p>
+	<p style="margin: 0;">
+		- NO ATO DA ENTREGA DEVE SER REALIZADA A CONFERÊNCIA DOS ITENS RECEBIDOS. NAO ACEITAMOS RECLAMAÇÕES POSTERIORES.
+	</p>
+
+	<br>
+	<h2 style="margin-bottom: 0">Aprovação</h2>
+	<table width="100%">
+		<tr>
+			<td style="border-top-style: solid;" colspan='3'>
+				Orçamento aprovado. Solicito início da produção. Sem mais,
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="padding: 25px"></td>
+		</tr>
+		<tr>
+			<td class="assisnatura" width="33%">
+				Nome do Comprador
+			</td>
+			<td class="assisnatura" width="33%">
+				RG
+			</td>
+			<td class="assisnatura" width="33%">
+				Assinatura
+			</td>
+		</tr>
+	</table>
+
+
+	<style type="text/css">
+		.assisnatura{
+			border-top-style: solid;
+			/*border-radius: 10px;*/
+			border-collapse: separate;
+			border-top-width: 1.5px;
+			/*border-top-left-radius: 10px;*/
+			border-top-right-radius: 50px 50px;
+		}
+	</style>	
+
+	<script type="text/javascript">
+		if (!localStorage.orcamentoSelecionado) {
+			alert("Não tem acesso para este conteudo!");
+			window.close();
+		}
+
+		var empresa_Global = JSON.parse( localStorage.getItem("empresa_Global")			);
+		var usuario_Global = JSON.parse( localStorage.getItem("usuario_Global")			);
+		/* console.log(localStorage.getItem("orcamentoSelecionado")); */
+		var pedido_Global  = JSON.parse( localStorage.getItem("orcamentoSelecionado")	);
+		var dadosEmpresa = "";
+		var pedido_item_Global = "";
+		var empresa_detalhe_Global = "";
+
+
+		var caminhoServer = "http://cdiinfo.com.br/aplicacoes_web/orcamento/controllers/";
+		
+		var nomeEmpresaPasta = empresa_Global.RAZAOSOCIAL.replace(/\./gi, "");
+		nomeEmpresaPasta = nomeEmpresaPasta.replace(/ /gi, "_");
+		var imagemLogo = "http://cdiinfo.com.br/aplicacoes_web/logo/"				/* Caminho absoluto */
+					   + nomeEmpresaPasta + "/" 									/* Nome da Empresa */
+					   + usuario_Global.filial + ".jpg";							/* Nome da imagem */
+
+		document.getElementById("imagemLogo").src = imagemLogo;
+		selecionarPedido();
+
+		/* localStorage.removeItem("orcamentoSelecionado"); */
+
+		function selecionarPedido(){
+			$.ajax({
+				url: caminhoServer+"impressao.php",
+				type: "POST",
+				dataType: "text",
+				data: {
+					'consultaEmpresa': true,
+					'codigo_empresa': empresa_Global.CODIGO,
+					'filial': usuario_Global.filial
+				},
+				error: function(){
+					/* console.log("Erro na requisição"); */
+				}
+			}).done( function(data){
+				/* console.log(data); */
+				data = JSON.parse(data);
+				/* console.log(data); */
+				empresa_detalhe_Global = data;
+
+				var descricaoEndereco = "";
+
+				$.ajax({
+					url: caminhoServer+"pedido_item.php",
+					type: 'POST',
+					dataType: 'text',
+					data:{
+						'listaPedidoItem': true,
+						'filial': usuario_Global.filial,
+						'documento': pedido_Global.documento,
+						'codigo_empresa': empresa_Global.CODIGO
+					}
+				}).done( function(data){
+					/* console.log(data); */
+					pedido_item_Global = JSON.parse(data);
+					/* console.log(pedido_item_Global); */
+
+					visualizarPedido();
+				});
+			});
+		}
+
+
+		function formataDataUn(dataUn){
+			dataUn = dataUn.split("-");
+			return dataUn[2] + "/" + dataUn[1] + "/" + dataUn[0];
+		}
+
+
+		function visualizarPedido(){
+			var numeroEnderecoUnico = pedido_Global.numero != "" ?  " - " + pedido_Global.numero : "";
+			var estadoEnderecoUnico = pedido_Global.estado != "" ?  " - " + pedido_Global.estado : "";
+
+			var arrayPagamento = pedido_Global.pagamento.split(" ");
+			var pagamento = "";
+			if ( !isNaN(arrayPagamento[0]) ){for(var i = 1; i < arrayPagamento.length; i++) pagamento += arrayPagamento[i];} 
+			else 																			pagamento = pedido_Global.pagamento;
+
+			document.getElementById("numDocumento").innerHTML = pedido_Global.documento;
+			document.getElementById("emissao").innerHTML = formataDataUn(pedido_Global.emissao.substring(0,10));
+			document.getElementById("nomeCliente").innerHTML = pedido_Global.razaosocial;
+			document.getElementById("telefoneCliente").innerHTML = pedido_Global.telefone;
+			document.getElementById("contatoCliente").innerHTML = pedido_Global.contato;
+			document.getElementById("endereco").innerHTML = pedido_Global.endereco + numeroEnderecoUnico;
+			document.getElementById("bairro").innerHTML = pedido_Global.bairro;
+			document.getElementById("cidadeEstado").innerHTML = pedido_Global.cidade + estadoEnderecoUnico;
+			document.getElementById("formaPagamento").innerHTML = pagamento;
+			document.getElementById("observacoa").innerHTML = pedido_Global.observacao;
+
+			document.getElementById("contudoProduto").innerHTML = montarTabelaItens();
+
+			var enderecoEmpresa = empresa_detalhe_Global.endereco + ", " 
+								+ empresa_detalhe_Global.numero + ", "
+								+ empresa_detalhe_Global.bairro;
+
+			var enderec2Empresa = empresa_detalhe_Global.cidade + " - "
+								+ empresa_detalhe_Global.estado + " CEP:"
+								+ empresa_detalhe_Global.cep;
+
+			var teledfoneFormateado = "(" + empresa_detalhe_Global.fone.substring(0,2) + ") " 
+									+ 		empresa_detalhe_Global.fone.substring(2,5) + "-"
+									+ 		empresa_detalhe_Global.fone.substring(5,empresa_detalhe_Global.fone.length);
+
+			var contatoEmpresa  = "Fone: " + teledfoneFormateado 
+								+ " E-mail: " + empresa_detalhe_Global.email;
+			document.getElementById("nomeEmpresa").innerHTML = empresa_detalhe_Global.descricao;
+			document.getElementById("enderecoEmpresa").innerHTML = enderecoEmpresa;
+			document.getElementById("enderec2Empresa").innerHTML = enderec2Empresa;
+			document.getElementById("contatoEmpresa").innerHTML = contatoEmpresa;
+
+			try {
+				window.print();
+			} catch(error) {
+				alert("O seu dispositivo não tem suporte para impressão");
+			}
+			window.close();
+		}
+
+
+		function montarTabelaItens(){
+			var conteudo = "";
+			var valorTotal = 0;
+			if (pedido_item_Global.length == 0) {
+				conteudo += "<h3>Nenhum registro encontrado</h3>";
+			} else {
+				conteudo += 	"<table width='100%' class='fontTable2'>"
+						 + 			"<tr>"
+						 + 				"<td class='fontMenor' align='left'>	<b>Descrição</b>	</td>"
+						 + 				"<td class='fontMenor' align='left'>	<b>Qdt - U.M.</b>	</td>"
+						 + 				"<td class='fontMenor' align='center'>	<b>Vlr. Uni.</b>	</td>"
+						 + 				"<td class='fontMenor' align='center'>	<b>Vlr. Total</b>	</td>"
+						 + 			"</tr>";
+
+				for (var i = pedido_item_Global.length - 1; i >= 0; i--) {
+					/* pedido_item_Global[i] */
+					conteudo += 	"<tr id='linhaPedidoItem"+i+"' style='border-top-style:solid;'>"
+							 + 			"<td class='fontMenor'>"
+							 + 				pedido_item_Global[i].item.item + " - " + pedido_item_Global[i].item.descricao
+							 + 			"</td>"
+							 /* + 		"</tr>" */
+							 /* + 		"<tr id='linhaPedidoItem2"+i+"'>" */
+							 + 			"<td class='fontMenor' align='left'>"
+							 + 				pedido_item_Global[i].quantidade + " - " + pedido_item_Global[i].unidade
+							 + 			"</td>"
+							 + 			"<td class='fontMenor' align='center'>"
+							 + 				formataValorParaImprimir(pedido_item_Global[i].valor_unitario)
+							 + 			"</td>"
+							 + 			"<td class='fontMenor' align='right'>"
+							 + 				formataValorParaImprimir(pedido_item_Global[i].valor_total)
+							 + 			"</td>"
+							 + 		"</tr>";
+					valorTotal += parseFloat(pedido_item_Global[i].valor_total);
+				}
+				conteudo += 		"<tr>"
+						 + 				"<td class='fontMenor' align='right' colspan='3'><b>Total: </b></td>"
+						 + 				"<td class='fontMenor' align='right'>"+formataValorParaImprimir(valorTotal)+"</td>"
+						 + 			"</tr>"
+						 + 		"</table>";
+			}
+			return conteudo;
+		}
+
+
+
+
+
+		function formataValorParaImprimir(valor){
+			valor = parseFloat(valor);
+			if (valor >= 0) {
+				valor = valor.toFixed(2);
+				valor = valor.replace(".", ",");
+				valor = "R$"+valor;
+			}else {
+				valor = valor * (-1);
+				valor = valor.toFixed(2);
+				valor = valor.replace(".", ",");
+				valor = "R$-"+valor;
+			}
+			/* valor = moeda(valor , 2 , "," , "."); */
+			return valor;
+		}
+	</script>
+</body>
+</html>

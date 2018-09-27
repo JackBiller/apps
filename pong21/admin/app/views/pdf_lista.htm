@@ -1,0 +1,87 @@
+
+<h1>Relatórios</h1>
+
+<div class="col-md-4 col-xs-12">
+	<input class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" id="pesquisa_relatorios" accesskey="b" onkeyup="buscar_relatorios()">
+</div>
+
+<style>
+    .modal .modal-dialog { width: 80%; margin-top: 2px; } 
+</style>
+
+<!-- Modal upload de Imagem -->
+<div class="modal fade col-xs-12" id="modalRelatorio" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" id="fecharModalIpBottun" data-dismiss="modal">
+					&times;
+				</button>
+				<h4 class="modal-title">Emitir Reltorio: <span id="descricaoRelatorio"></span></h4>
+			</div>
+			<div class="modal-body">
+				<div class="col-md-4 col-sm-6">
+					<br>Data Inicial
+					<input type="date" id="data_inicial_modal_relatorio" class="form-control">
+					<input type="hidden" id="id_modal_relatorio">
+				</div>
+
+				<div class="col-md-4 col-sm-6">
+					<br>Data Final
+					<input type="date" id="data_final_modal_relatorio" class="form-control">
+				</div>
+
+				<div class="col-md-4">
+					<br>Coluna de Data
+					<div id="viewColunasDiv_data"></div>
+				</div>
+
+				<div id="elementosOcultos" class="hidden"></div>
+
+				<div class="col-xs-4">
+					<br>Incluir filtro por Campo
+					<input type="checkbox" id="in_filtro_modal_relatorio" class="form-control" onclick="listarColunasFiltro(this)"><br>
+				</div>
+				<div class="col-xs-12">
+					<div id="viewColunasDiv_filtro">.</div>
+				</div>
+				<br>
+				<div class="text-center col-xs-12">
+					<br><br>
+					<button class="btn btn-default" onclick="emitirRelatorio();">
+						<i class="fa fa-file-o"></i>&nbsp;&nbsp;Emitir Relatório
+					</button>
+					&nbsp;&nbsp;
+					<button class="btn btn-default" onclick="emitirRelatorioTotos();">
+						<i class="fa fa-copy"></i>&nbsp;&nbsp;
+						Emitir Relatório (todos os registros)
+					</button>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					<i class="fa fa-times" aria-hidden="true"></i>&nbsp;&nbsp;Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- fim Modal upload de Imagem -->
+
+
+
+<div class="col-md-8 col-xs-12 text-right">
+	<a href="principal.php#!pdf_adiciona" class="btn btn-success" accesskey="a">
+		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Adicionar Relatórios
+	</a>
+</div>
+
+<br><br>
+
+<script type="text/javascript">
+	verificaAcess('pdf');
+</script>
+
+<div id="conteudoRelatorios"></div>
+
+<script type="text/javascript" src="app/js/ajax/pdf_ajax_lista_relatorios.js"></script>

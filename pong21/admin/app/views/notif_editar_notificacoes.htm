@@ -1,0 +1,63 @@
+
+
+<h1>Editar: Notificações Config</h1>
+
+<div class="text-right">
+	<a href="principal.php#!notif_lista_config" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+	<div class="col-md-4">
+		<br>Aréa &nbsp;&nbsp;<span style='color: red'>*</span>
+		<div id="areasListadasDiv"></div>
+	</div>
+
+	<div class="col-md-8">
+		<br>Tipo de Atividades &nbsp;&nbsp;<span style='color: red'>*</span>
+		<table class="table" align="center">
+			<tr>
+				<td><b>Operação</b></td>
+				<td><b></b></td><!-- Selecionar -->
+			</tr>
+			<tr id="linha_I" bgcolor="#f0ad4e" style="color: white;" onclick="selecionarColuna('I')">
+				<td>Inserção</td>
+				<td align="right">
+					<div id="icone_I"><i class="fa fa-times"></i></div>
+					<input type="hidden" id="check_I">
+					<input type="hidden"  name="atividade" value="I">
+				</td>
+			</tr>
+			<tr id="linha_U" bgcolor="#f0ad4e" style="color: white;" onclick="selecionarColuna('U')">
+				<td>Atualização</td>
+				<td align="right">
+					<div id="icone_U"><i class="fa fa-times"></i></div>
+					<input type="hidden" id="check_U">
+					<input type="hidden"  name="atividade" value="U">
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="col-md-12 text-center">
+		<br>
+		
+			<input type="hidden" id="data_atualizacao_notificacoes_config">
+			<script>$("#data_atualizacao_notificacoes_config").val("1")</script>
+			
+			<input type="hidden" id="usuario_id">
+			<script>$("#usuario_id").val($("#usuario").val())</script>
+			
+		<button class="btn btn-success" onclick='atualizarrRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Atualizar
+		</button>
+	</div>
+</div>
+
+<script type="text/javascript">
+	verificaAcess('notif');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/notif_ajax_editar_notificacoes.js"></script>
+
+<div id="scriptsAdicionais"></div>

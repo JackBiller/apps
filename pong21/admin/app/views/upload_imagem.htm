@@ -1,0 +1,49 @@
+<br><br>
+
+<ul class="nav nav-tabs">
+	<li class="active">
+		<a href="principal.php#!/upload_imagem">Upload de Imagem</a>
+	</li>
+	<li>
+		<a href="principal.php#!/upload_imagem_view">Visualizar Imagens</a>
+	</li>
+</ul>
+
+
+<br>
+<h1>Upload de Imagem!</h1>
+<br>
+<img src="app/img/padraoUp.png" id="imgemViewsUploadImagem" height="100px">
+<form action="uploard.php" method="POST" enctype="multipart/form-data">
+	<input type="file" class="form-control" name="arquivo" id="imagemInputImagem">
+	<!-- <input type="hidden" name="pasta" value="app/upload/img/"> -->
+	<input type="hidden" name="tipo" value="img">
+	<input type="hidden" name="paginaLogar" id="paginaLogarModalImagem">
+	<button type="submit" class="btn btn-default" id="btn_uploadImagemSubmit" disabled>
+		<i class="fa fa-upload" aria-hidden="true"></i>&nbsp;&nbsp;Uploard
+	</button>
+	<span id="erroExtencaoArqImagem" style="color:red;"></span>
+</form>
+
+<script type="text/javascript">
+	verificaAcess('upload');
+	$("#imagemInputImagem").on("change", function(){
+		var files = !!this.files ? this.files : [];
+		if (!files.length || !window.FileReader) return;
+
+		if (/^image/.test( files[0].type)){
+			var reader = new FileReader();
+			reader.readAsDataURL(files[0]);
+
+			reader.onload = function(){
+				$("#imgemViewsUploadImagem").attr('src', this.result);
+				document.getElementById("btn_uploadImagemSubmit").disabled = false;
+				$("#erroExtencaoArqImagem").html("");
+			}
+		} else {
+			$("#imgemViewsUploadImagem").attr('src', "app/img/padraoUp.png");
+			document.getElementById("btn_uploadImagemSubmit").disabled = true;
+			$("#erroExtencaoArqImagem").html("Arquivo inválido!");
+		}
+	});
+</script>

@@ -1,0 +1,24 @@
+
+<h1>Nível de Acesso</h1>
+
+<div class="col-md-4 col-xs-12">
+	<input class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" id="pesquisa_nivel_acesso" accesskey="b" onkeyup='buscar_nivel_acesso()'>
+</div>
+
+
+
+<div class="col-md-8 col-xs-12 text-right">
+	<a href="principal.php#!usuario_nivel_acesso_adicionar" class="btn btn-success" accesskey="a">
+		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Adicionar Nível de Acesso
+	</a>
+</div>
+
+<br><br>
+
+<div id="conteudoNivel_acesso"></div>
+
+<script type="text/javascript">
+	verificaAcess('usuario');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/usuario_ajax_lista_nivel_acesso.js"></script>

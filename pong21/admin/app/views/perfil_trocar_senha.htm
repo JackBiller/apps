@@ -1,0 +1,95 @@
+
+<br>
+<h1>Troca Senha</h1>
+<br>
+
+
+<div class="col-md-4">
+	<br>Senha Antiga
+	<input type="password" maxlength="100" class="form-control" id="senhaOld">
+</div>
+
+<div class="col-md-4">
+	<br>Nova Senha
+	<input type="password" maxlength="100" class="form-control" id="senhaNew">
+</div>
+
+<div class="col-md-4">
+	<br>Corfirma Nova Senha
+	<input type="password" maxlength="100" class="form-control" id="comf_senhaNew">
+</div>
+	
+
+<div class="col-md-12 text-center">
+	<br>
+	<button class="btn btn-success" onclick="trocarSenha();" accesskey="s">
+		<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Alterar
+	</button>
+</div>
+
+<script type="text/javascript">
+	function trocarSenha(){
+		var campoFocus = "";
+		var senhaOld = $("#senhaOld").val();
+		var senhaNew = $("#senhaNew").val();
+		var comf_senhaNew = $("#comf_senhaNew").val();
+
+			 if(senhaOld == "") 		campoFocus = "senhaOld";
+		else if(senhaNew == "") 		campoFocus = "senhaNew";
+		else if(comf_senhaNew == "") 	campoFocus = "comf_senhaNew";
+
+		else {
+			if (senhaNew == comf_senhaNew) {
+				$.ajax({
+					url:'app/controllers/funcoesController.php',
+					type: 'POST',
+					dataType: 'text',
+					data: {
+						'consultarSenha': true,
+						'id_usuario': $("#usuario").val(),
+						'table': "usuario",
+						'senha': senhaOld,
+						'password': true
+					}
+				}).done( function(data){
+					if (data != 1 && data != "1") toast.danger("Senha inválida! Não encontrou sua senha antiga!");
+					else {
+						$.ajax({
+							url:'app/controllers/funcoesController.php',
+							type: 'POST',
+							dataType: 'text',
+							data: {
+								'alterarPerfil': true,
+								'id_usuario': $("#usuario").val(),
+								'table': "usuario",
+								'senha': senhaNew,
+								'password': true
+							}
+						}).done( function(data){
+							console.log(data);
+							if (data != 1 && data != "1") 	toast.danger("Falha ao Alterar!");
+							else {
+								toast.success("Alterado com sucesso!");
+								$("#senhaOld").val("");
+								$("#senhaNew").val("");
+								$("#comf_senhaNew").val("");
+							}
+						});
+					}
+				});
+			}
+			else toast.danger('Senha inválida! A primeira senha nova é diferente da confirmação!');
+			
+		} 
+
+		if (campoFocus != "") {
+			document.getElementById(campoFocus).focus();
+			toast.danger('Preencha no mínimo todos os campos obrigatórios!');
+		}
+	}
+
+	function validation(valor){
+		if (valor == "") 	return false;
+		else 				return true;
+	}
+</script>

@@ -1,0 +1,48 @@
+<br><br>
+
+<ul class="nav nav-tabs">
+	<li>
+		<a href="principal.php#!/upload_video">Upload de Vídeo</a>
+	</li>
+	<li class="active">
+		<a href="principal.php#!/upload_video_view">Visualizar Vídeos</a>
+	</li>
+</ul>
+
+
+<br>
+<h1>Visualizar Vídeos</h1>
+<br>
+
+<div class="input-group">
+	<input type="text" class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" onkeyup="chamarImgUpView(this.value);">
+	<span class="input-group-addon">
+		<i class="fa fa-search" aria-hidden="true"></i>
+	</span>
+</div>
+
+<br>
+
+<div id="videosView"></div>
+
+<script type="text/javascript">
+	verificaAcess('upload');
+	function chamarImgUpView(filtro){
+		$("#videosView").html("Carregando...");
+		$.ajax({
+			url:'app/controllers/funcoesController.php',
+			type: 'POST',
+			dataType: 'text',
+			data: {
+				'listarArquivo': true,
+				'filtro': filtro,
+				'tipo': "video"
+			}
+		}).done( function(data){
+			console.log(data);
+			$("#videosView").html(data);
+		});
+	}
+	
+	chamarImgUpView("");
+</script>

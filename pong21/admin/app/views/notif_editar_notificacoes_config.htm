@@ -1,0 +1,115 @@
+
+
+<h1>Editar: Notificações Config</h1>
+
+<div class="text-right">
+	<a href="principal.php#!notificacoes_config" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+<div class="col-md-4">
+	<br>Área &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="200" class="form-control" id="area_notificacoes_config" accesskey="i">
+</div>
+<div class="col-md-4">
+	<br>Tipo Alteracao &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="tipo_alteracao_notificacoes_config" ><option value='insert'>insert</option><option value='update'>update</option><option value='delete'>delete</option></select>
+</div>
+<div class="col-md-4">
+	<br>Ativo? &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="bool_ativo_notificacoes_config" >
+		<option value="1" selected>Sim</option>
+		<option value="0">Não</option>
+	</select>
+</div>
+	<div class="col-md-12 text-center">
+		<br>
+		
+			<input type="hidden" id="data_atualizacao_notificacoes_config">
+			<script>$("#data_atualizacao_notificacoes_config").val("1")</script>
+			
+			<input type="hidden" id="usuario_id">
+			<script>$("#usuario_id").val($("#usuario").val())</script>
+			
+		<button class="btn btn-success" onclick='atualizarrRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Atualizar
+		</button>
+	</div>
+</div>
+
+<script type="text/javascript">
+	verificaAcess('notif');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/ajax_editar_notificacoes_config.js"></script>
+
+<div id="scriptsAdicionais"></div>
+
+
+
+
+<h1>Editar: Notificações</h1>
+
+<div class="text-right">
+	<a href="principal.php#!notificacoes" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+<div class="col-md-4">
+	<br>Descrição &nbsp;&nbsp;<span style='color: red'>*</span>
+	<textarea class="form-control" style="resize: vertical" id="descricao_notificacoes" accesskey="i"></textarea>
+</div>
+<div class="col-md-4">
+	<br>Usuário Atuador &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="200" class="form-control" id="usuario_atuador_notificacoes" >
+</div>
+<div class="col-md-4">
+	<br>Usuaio Requerente &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="200" class="form-control" id="usuaio_requerente_notificacoes" >
+</div>
+<div class="col-md-4">
+	<br>Tipo Alteracao &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="tipo_alteracao_notificacoes" ><option value='i'>i</option><option value='u'>u</option><option value='d'>d</option></select>
+</div>
+<div class="col-md-4">
+	<br>Notificações Config &nbsp;&nbsp;<span style='color: red'>*</span>
+	<div id="notificacoes_configDiv"></div>
+</div>
+<div class="col-md-4">
+	<br>View? &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="bool_view_notificacoes" >
+		<option value="1" selected>Sim</option>
+		<option value="0">Não</option>
+	</select>
+</div>
+<div class="col-md-4">
+	<br>Ativo? &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="bool_ativo_notificacoes" >
+		<option value="1" selected>Sim</option>
+		<option value="0">Não</option>
+	</select>
+</div>
+	<div class="col-md-12 text-center">
+		<br>
+		
+			<input type="hidden" id="data_atualizacao_notificacoes">
+			<script>$("#data_atualizacao_notificacoes").val("1")</script>
+			
+		<button class="btn btn-success" onclick='atualizarrRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Atualizar
+		</button>
+	</div>
+</div>
+
+<script type="text/javascript">
+	verificaAcess('notif');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/ajax_editar_notificacoes.js"></script>
+
+<script type="text/javascript" src="app/js/combo/notificacoes_configComboPre.js"></script>
+<div id="scriptsAdicionais"></div>

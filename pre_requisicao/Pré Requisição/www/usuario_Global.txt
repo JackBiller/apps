@@ -1,0 +1,10 @@
+
+usuario_Global
+
+{
+	"usuarioID" 	: 1,
+	"usuarioNome" 	: "ADMINISTRADOR",
+	"usuarioLogin" 	: "ADM",
+	"usuarioSenha" 	: "admmda",
+	"debug" 		: "OK"
+}

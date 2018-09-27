@@ -1,0 +1,24 @@
+
+<h1>Historico Jogo</h1>
+
+<div class="col-md-4 col-xs-12">
+	<input class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" id="pesquisa_historico_jogo" accesskey="b" onkeyup='buscar_historico_jogo()'>
+</div>
+
+
+
+<div class="col-md-8 col-xs-12 text-right">
+	<a href="principal.php#!adicionar_historico_jogo" class="btn btn-success" accesskey="a">
+		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Adicionar Historico Jogo
+	</a>
+</div>
+
+<br><br>
+
+<div id="conteudoHistorico_jogo"></div>
+
+<script type="text/javascript">
+	verificaAcess('historico_jogo');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/ajax_lista_historico_jogo.js"></script>

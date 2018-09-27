@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Passar Peso</title>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+	<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+	<script type="text/javascript" src="js/jQuery.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">      
+
+	<!-- Scrips padrão -->
+	<script type="text/javascript" src="js/config/element.js"></script>
+	<script type="text/javascript" src="js/config/funcoes.js"></script>
+	<script type="text/javascript" src="js/config/menu.js"></script>
+	<script type="text/javascript" src="js/config/formulario.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="js/valorPorExtenco.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+
+	<script type="text/javascript" src="js/bootbox.js"></script>
+	<script type="text/javascript" src="js/masked2.js"></script>
+	<script type="text/javascript" src="js/masked.js"></script>
+	<script type="text/javascript" src="js/toast.js"></script>
+	<script type="text/javascript" src="js/maskmoney.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+
+	<!-- Biblioteca dataList usando Jquery  -->
+	<link href="lb/jquery-flexdatalist/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
+	<script src="lb/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+
+	<script src="js/jquery.maskMoney.min.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/toast.css">
+
+	<meta charset="utf-8">
+</head>
+
+
+
+<body onload="cricao();">
+
+	<div class="col-xs-3 text-left" style="">
+		<h1 style="margin: 0;margin-top: 5px;">Passagem de Peso</h1>
+	</div>
+	
+	
+	<div class="col-xs-3 text-center" style="margin-bottom: 5px;text-align: center;">
+		Definir Número de Pesos
+		<input type="number" id="numeroDePesosCampo" value="3" class="form-control"> 
+	</div>
+	
+	<div class="col-xs-3 text-right" style="margin-top: 15px;margin-bottom: 5px;text-align: center;">
+		<button onclick="preCricao()" class="btn btn-primary btn-block">
+			Criar
+		</button>
+	</div>
+
+	<div class="col-xs-3 text-center">
+		Peso Selecionado
+		<input type="text" id="pesoAtualPesa" value="0" class="form-control" style="text-align: center;" disabled>
+	</div>
+	<br><br><br><br>
+
+
+	<div class="areaCricao" id="areaCricao" class="form-control"></div>
+	
+	<style type="text/css">
+		.celula{
+			width: 30px;
+			height: 30px;
+			/*color: white;*/
+			border-style: solid;
+			color: transparent;
+		}
+	</style>
+
+	<script type="text/javascript">
+		var numeroDePesos = 3;
+		var colunasDesenhadas = 0;
+		var arrayColuna = [];
+
+		var upColuna = true;
+		var PesoSelecionado = 0;
+
+		function preCricao(){
+			var numeroDePesosDigitado = document.getElementById("numeroDePesosCampo").value;
+			if (numeroDePesosDigitado > 2 && numeroDePesosDigitado < 5) {
+				numeroDePesos = parseInt(numeroDePesosDigitado);
+				colunasDesenhadas = 0;
+				arrayColuna = [];
+				upColuna = true;
+				PesoSelecionado = 0;
+				cricao();
+			}
+		}
+
+
+
+
+		function cricao(){
+			for (var i =  0; i < (3 + (2 * numeroDePesos)) * numeroDePesos; i++) {
+				if ( i == parseInt((3 + (2 * numeroDePesos))/2) ) {
+					arrayColuna.push(i);
+					colunasDesenhadas++;
+				} else if (
+					((((3 + (2 * numeroDePesos))*colunasDesenhadas)+parseInt((3 + (2 * numeroDePesos))/2)) / i) == 1
+				) {
+					arrayColuna.push(i);
+					colunasDesenhadas++;
+				}
+			}
+
+			var resultado = "<table width='100%'>";
+			for (var i = 0; i < (numeroDePesos * 2) + 2; i++) {
+				resultado += "<tr>";
+				for (var j = 0; j < (3 + (2 * numeroDePesos)) * numeroDePesos; j++) {
+					if (i == 0) {
+						if (arrayColuna.indexOf(j) != -1) {
+							resultado += "<td class='celula' id='posicao"+i+"+"+j+"' style='/*color:red*/'>";
+							resultado +=    "<button class='btn btn-block btn-success' onclick='selecionarColuna("+arrayColuna[arrayColuna.indexOf(j)]+")'>";
+							resultado +=        "<i class='fa fa-arrow-up'></i>";
+							resultado +=    "</button>";
+							// resultado +=     i + " + " + j;
+							resultado += "</td>";
+						} else {
+							resultado += "<td class='celula' id='posicao"+i+"+"+j+"' style='/*color:red*/'>";
+							// resultado +=     i + " + " + j;
+							resultado +=    "0";
+							resultado += "</td>";
+						}
+					} else  if(i < (numeroDePesos * 2)+1){
+						if( arrayColuna.indexOf(j) >= 0 ){
+							resultado += "<td class='celula' id='posicao"+i+"+"+j+"' style='background-color:black;'>"
+							// resultado +=     i + " + " + j;
+							resultado +=    "0";
+							resultado += "</td>";
+						} else {
+							resultado += "<td class='celula' id='posicao"+i+"+"+j+"' style='background-color:lightblue;'>"
+							// resultado +=     i + " + " + j;
+							resultado +=    "0";
+							resultado += "</td>";
+						}
+					} else {
+						resultado += "<td class='celula' id='posicao"+i+"+"+j+"' style='background-color:black;'></td>";
+					}
+				}
+				resultado += "</tr>";
+			}
+			resultado += "</table>";
+			document.getElementById("areaCricao").innerHTML = resultado;
+
+			var pesoAtualPesa = 1;
+			var linhaAtual = numeroDePesos + 1;
+
+
+			for (var i = 0; i < numeroDePesos; i++) {
+				for (var j = arrayColuna[0]-pesoAtualPesa; j <= arrayColuna[0]+pesoAtualPesa; j++) {
+					document.getElementById("posicao"+linhaAtual+"+"+j).style.backgroundColor = "green";
+					document.getElementById("posicao"+linhaAtual+"+"+j).innerHTML = pesoAtualPesa;
+				}
+				linhaAtual++;
+				pesoAtualPesa++;
+			}
+		}
+
+
+
+		function selecionarColuna(coluna){
+			var button = "";
+
+			var buttonRed = false;
+			var buttonVerde = false;
+
+			var valorLinhaAtual = 0;
+			var valorCelula = 0;
+			var linhaMove = 0;
+			var linhaMoveColoca = 0;
+
+
+			for (var i = 1; i <= numeroDePesos; i++) {
+				valorLinhaAtual = numeroDePesos + i;
+				valorCelula = parseInt(document.getElementById("posicao"+valorLinhaAtual+"+"+coluna).innerHTML);
+				if (valorCelula != 0) {
+					i = valorLinhaAtual;
+					linhaMove = valorLinhaAtual;
+					linhaMoveColoca = valorLinhaAtual-1;
+				}
+			}
+
+
+			if (upColuna && linhaMove != 0 && valorCelula != 0) {
+				PesoSelecionado = valorCelula;
+				// A coluna selecionada é valida
+				for (var i =  coluna-PesoSelecionado; i <= coluna+PesoSelecionado; i++) {
+					document.getElementById("posicao"+linhaMove+"+"+i).innerHTML = "0";
+					if (i == coluna) {
+						document.getElementById("posicao"+linhaMove+"+"+i).style.backgroundColor = "black";
+					} else {
+						document.getElementById("posicao"+linhaMove+"+"+i).style.backgroundColor = "lightblue";
+					}
+				}
+				upColuna = false;
+			}
+
+			else if( !upColuna && (PesoSelecionado < valorCelula || valorCelula == 0) ){
+				if (linhaMove == 0) linhaMoveColoca = numeroDePesos * 2; /* Define a linha se não hover nada */
+
+				for (var i =  coluna-PesoSelecionado; i <= coluna+PesoSelecionado; i++) {
+					document.getElementById("posicao"+linhaMoveColoca+"+"+i).innerHTML = PesoSelecionado;
+					document.getElementById("posicao"+linhaMoveColoca+"+"+i).style.backgroundColor = "green";
+				}
+				
+				upColuna = true;
+				PesoSelecionado = 0;
+			}
+
+			else {
+				alert("Operação invalida!");
+			}
+
+			if (PesoSelecionado != 0)   { buttonRed = true; }
+			else                        { buttonVerde = true;}
+
+			document.getElementById("pesoAtualPesa").value = PesoSelecionado;
+
+			for (var i = 0; i < numeroDePesos; i++) {
+				if (buttonRed) {
+					button = "<button class='btn btn-block btn-danger' onclick='selecionarColuna("+arrayColuna[i]+")'>";
+					button +=   "<i class='fa fa-arrow-down'></i>";
+					button += "</button>";
+				} else {
+					button = "<button class='btn btn-block btn-success' onclick='selecionarColuna("+arrayColuna[i]+")'>";
+					button +=   "<i class='fa fa-arrow-up'></i>";
+					button += "</button>";
+				}
+				document.getElementById("posicao0+"+arrayColuna[i]).innerHTML = button;
+			}
+			valida();
+		}
+
+		function valida(){
+			var ultimaLinha = numeroDePesos + 1;
+			var ultimaCelula = document.getElementById("posicao"+ultimaLinha+"+"+arrayColuna[arrayColuna.length - 1]).innerHTML;
+			ultimaCelula = parseInt(ultimaCelula);
+			if (ultimaCelula > 0) {
+				alert("Fim de Jogo! Consegui solucionar o problema :)");
+				preCricao();
+			}
+		}
+	</script>
+</body>
+
+</html>

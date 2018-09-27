@@ -1,0 +1,24 @@
+
+<h1>Jogo Atual</h1>
+
+<div class="col-md-4 col-xs-12">
+	<input class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" id="pesquisa_jogo_atual" accesskey="b" onkeyup='buscar_jogo_atual()'>
+</div>
+
+
+
+<div class="col-md-8 col-xs-12 text-right">
+	<a href="principal.php#!adicionar_jogo_atual" class="btn btn-success" accesskey="a">
+		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Adicionar Jogo Atual
+	</a>
+</div>
+
+<br><br>
+
+<div id="conteudoJogo_atual"></div>
+
+<script type="text/javascript">
+	verificaAcess('jogo_atual');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/ajax_lista_jogo_atual.js"></script>

@@ -1,0 +1,46 @@
+<br><br>
+
+<ul class="nav nav-tabs">
+	<li class="active">
+		<a href="principal.php#!/upload_texto">Upload de Arquivo de Texto</a>
+	</li>
+	<li>
+		<a href="principal.php#!/upload_texto_view">Visualizar Arquivos de Texto</a>
+	</li>
+</ul>
+
+
+<br>
+<h1>Upload de Arquivo de Texto!</h1>
+<br>
+
+<form action="uploard.php" method="POST" enctype="multipart/form-data">
+	<input type="file" class="form-control" name="arquivo" id="audioInputaudio">
+	<input type="hidden" name="tipo" value="text">
+	<!-- <input type="hidden" name="paginaLogar" id="paginaLogarModalImagem"> -->
+	<button type="submit" class="btn btn-default" id="btn_uploadImagemSubmit" disabled>
+		<i class="fa fa-upload" aria-hidden="true"></i>&nbsp;&nbsp;Uploard
+	</button>
+	<span id="erroExtencaoArqImagem" style="color:red;"></span>
+</form>
+
+<script type="text/javascript">
+	verificaAcess('upload');
+	$("#audioInputaudio").on("change", function(){
+		var files = !!this.files ? this.files : [];
+		if (!files.length || !window.FileReader) return;
+		console.log(files[0].type);
+		if (/^text/.test( files[0].type) || /^application/.test( files[0].type)){
+			var reader = new FileReader();
+			reader.readAsDataURL(files[0]);
+
+			reader.onload = function(){
+				document.getElementById("btn_uploadImagemSubmit").disabled = false;
+				$("#erroExtencaoArqImagem").html("");
+			}
+		} else {
+			document.getElementById("btn_uploadImagemSubmit").disabled = true;
+			$("#erroExtencaoArqImagem").html("Arquivo inválido!");
+		}
+	});
+</script>

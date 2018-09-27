@@ -1,0 +1,109 @@
+
+<br>
+<h1>Emitir Relatórios</h1>
+<br>
+
+<div class="col-md-4 col-xs-12">
+	<div class="input-group">
+		<input class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" id="pesquisa_relatorios" accesskey="b">
+		<span class="input-group-addon" style="padding: 0;">
+			<button onclick="buscar_relatorios()" class="btn">
+				<i class="fa fa-search" aria-hidden="true"></i>
+			</button>
+		</span>
+	</div>
+</div>
+<table class="table">
+	<tr>
+		<td>Tabela</td>
+		<td>Emitir</td>
+	</tr>
+	<tr>
+		<td>Contato</td>
+		<td>
+			<a href="principal.php#!/pdf_emitir" style="color: blue;" onclick="chamarModalRelatorio('contato')">
+				<i class="fa fa-print"></i>
+			</a>
+		</td>
+	</tr>
+</table>
+
+<!-- Modal upload de Imagem -->
+<div class="modal fade" id="modalRelatorio" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" id="fecharModalIpBottun" data-dismiss="modal">
+					&times;
+				</button>
+				<h4 class="modal-title">Colunas: </h4>
+			</div>
+			<div class="modal-body">
+				<div id="viewColunasDiv"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					<i class="fa fa-times" aria-hidden="true"></i>&nbsp;&nbsp;Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- fim Modal upload de Imagem -->
+
+<script type="text/javascript">
+	verificaAcess('pdf');
+	function chamarModalRelatorio(tabela){
+		var vetor = [];
+		var subVetor = [];
+
+		var tabelaColunas = "<h2>Tabela: " + tabela + "</h2>";
+		tabelaColunas += 	"<table class='table'>";
+		tabelaColunas += 		"<tr>";
+		tabelaColunas += 			"<td><b>Coluna</b></td>";
+		tabelaColunas += 			"<td><b>Selecionar</b></td>";
+		tabelaColunas += 		"</tr>";
+
+		$('#modalRelatorio').modal('show');
+		$.ajax({
+			url:'app/controllers/funcoesController.php',
+			type: 'POST',
+			dataType: 'text',
+			data: {
+				'listarColunasTable': true,
+				'tabela': tabela
+			}
+		}).done( function(data){
+			console.log(data);
+
+			vetor = data.split("[,]");
+			for (var i = 0; i < vetor.length; i++) {
+				subVetor =  vetor[i].split("{,}");
+
+				tabelaColunas += "<tr bgcolor='#5cb85c' style='color: white' id='linha_"+subVetor[0]+"' onclick='selecionarColuna(\""+subVetor[0]+"\")'>";
+				tabelaColunas += 	"<td>"+subVetor[0]+"</td>";
+				tabelaColunas += 	"<td>";
+				tabelaColunas += 		"<span id='icone_"+subVetor[0]+"'><i class='fa fa-check'></i></span>";
+				tabelaColunas += 		"<input type='hidden' name='coluna' value='"+subVetor[0]+"'>";
+				tabelaColunas += 		"<input class='hidden' type='checkbox' id='check_"+subVetor[0]+"' checked>";
+				tabelaColunas += 	"</td>";
+				tabelaColunas += "</tr>";
+			}
+			tabelaColunas += "</table>";
+
+			$("#viewColunasDiv").html(tabelaColunas);
+		});
+	}
+
+	function selecionarColuna(coluna){
+		if (document.getElementById("check_"+coluna).checked) {
+			document.getElementById("check_"+coluna).checked = false;
+			document.getElementById("icone_"+coluna).innerHTML = "<i class='fa fa-times'></i>";
+			document.getElementById("linha_"+coluna).style.backgroundColor = "#f0ad4e";
+		} else {
+			document.getElementById("check_"+coluna).checked = true;
+			document.getElementById("icone_"+coluna).innerHTML = "<i class='fa fa-check'></i>";
+			document.getElementById("linha_"+coluna).style.backgroundColor = "#5cb85c";
+		}
+	}
+</script>

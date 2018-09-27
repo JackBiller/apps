@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Operações Atômicas</title>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+	<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+	<script type="text/javascript" src="js/jQuery.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">      
+
+	<!-- Scrips padrão -->
+	<script type="text/javascript" src="js/config/element.js"></script>
+	<script type="text/javascript" src="js/config/funcoes.js"></script>
+	<script type="text/javascript" src="js/config/menu.js"></script>
+	<script type="text/javascript" src="js/config/formulario.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="js/valorPorExtenco.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+
+	<script type="text/javascript" src="js/bootbox.js"></script>
+	<script type="text/javascript" src="js/masked2.js"></script>
+	<script type="text/javascript" src="js/masked.js"></script>
+	<script type="text/javascript" src="js/toast.js"></script>
+	<script type="text/javascript" src="js/maskmoney.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+
+	<!-- Biblioteca dataList usando Jquery  -->
+	<link href="lb/jquery-flexdatalist/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
+	<script src="lb/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+
+	<script src="js/jquery.maskMoney.min.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/toast.css">
+
+	<meta charset="utf-8">
+</head>
+<body>
+	<h1>Distribuição Eletrônica / Atômica</h1>
+	<!-- <br> -->
+	<table class="table">
+		<tr>
+			<td width="50%">
+				Número Atômico
+				<input type="number" id="numAtomos" class="form-control" value='1'>
+			</td>
+			<td>
+				<div style="margin-top: 15px;">
+					<button class="btn btn-primary btn-block" onclick="distribuirEletrons()">
+						Fazer Distribuição
+					</button>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button class="btn btn-block btn-success" onclick="atomoPorAtomo('+');">
+					<i class="fa fa-plus"></i>
+				</button>
+			</td>
+			<td>
+				<button class="btn btn-block btn-danger" onclick="atomoPorAtomo('-');">
+					<i class="fa fa-minus"></i>
+				</button>
+			</td>
+		</tr>
+	</table>
+	<br>
+	<div id="resultado"></div>
+
+
+	<script type="text/javascript">
+		function atomoPorAtomo(op){
+			var numAtomos = $("#numAtomos").val();
+			if (op == "+") {
+				numAtomos = parseInt(numAtomos) + 1;
+			}else {
+				numAtomos = parseInt(numAtomos) - 1;
+			}
+
+			if (numAtomos > 120){
+				$("#numAtomos").val("120");
+			}
+			else if(numAtomos < 0) {
+				$("#numAtomos").val(1);
+			}
+			else {
+				$("#numAtomos").val(numAtomos);
+			}
+			distribuirEletrons();
+		}
+
+
+		function distribuirEletrons(){
+			var campos = document.getElementsByName("campoTebalaDistribuicao");
+			for (var i = campos.length - 1; i >= 0; i--) campos[i].innerHTML = 0;
+
+			var numAtomos = $("#numAtomos").val();
+			var numAtomosDistribuidos = 0;
+			var letraAtual = "s";
+			var valorRecebido = 0;
+			var contS = 0;
+			var contP = 1;
+			var contD = 2;
+			var contF = 3;
+
+			if (numAtomos <= 120 && numAtomos > 0) {
+				while(numAtomos != numAtomosDistribuidos){
+					if (letraAtual == "s") {
+						numAtomosDistribuidos += 2;
+						contS++;
+						if (numAtomos < numAtomosDistribuidos) {
+							valorRecebido = numAtomos - (numAtomosDistribuidos - 2);
+							numAtomosDistribuidos = numAtomos;
+						}
+						else valorRecebido = 2;
+
+						switch(contS){
+							case 1: letraAtual = "s"; break;
+							case 2: letraAtual = "p"; break;
+							case 3: letraAtual = "p"; break;
+							case 4: letraAtual = "d"; break;
+							case 5: letraAtual = "d"; break;
+							case 6: letraAtual = "f"; break;
+							case 7: letraAtual = "f"; break;
+						}
+						document.getElementById(contS+"s").innerHTML = valorRecebido;
+					}
+
+					else if (letraAtual == "p") {
+						numAtomosDistribuidos += 6;
+						contP++;
+						if (numAtomos < numAtomosDistribuidos) {
+							valorRecebido = numAtomos - (numAtomosDistribuidos - 6);
+							numAtomosDistribuidos = numAtomos;
+						}
+						else valorRecebido = 6;
+
+						letraAtual = "s";
+						document.getElementById(contP+"p").innerHTML = valorRecebido;
+					}
+					
+					else if (letraAtual == "d") {
+						numAtomosDistribuidos += 10;
+						contD++;
+						if (numAtomos < numAtomosDistribuidos) {
+							valorRecebido = numAtomos - (numAtomosDistribuidos - 10);
+							numAtomosDistribuidos = numAtomos;
+						}
+						else valorRecebido = 10;
+
+						letraAtual = "p";
+						document.getElementById(contD+"d").innerHTML = valorRecebido;
+					}
+					
+					else if (letraAtual == "f") {
+						numAtomosDistribuidos += 14;
+						contF++;
+						if (numAtomos < numAtomosDistribuidos) {
+							valorRecebido = numAtomos - (numAtomosDistribuidos - 14);
+							numAtomosDistribuidos = numAtomos;
+						}
+						else valorRecebido = 14;
+
+						letraAtual = "d";
+						document.getElementById(contF+"f").innerHTML = valorRecebido;
+					}
+				}
+			}
+			else {
+				// resultado = "<h3>Número de Atomos deve ser 0 < n <= 115!</h3>";
+				jk_toasth("error", "Número de Atomos deve ser 0 < n <= 120!", 5000);
+			}
+		}
+
+		function tabelaDistribuicao(){
+			var resultado = "<table class='table'>";
+			var limitador = 0;
+			var colunaAtual = 0;
+			var contValor4 = 0;
+			var letraPosicao = "";
+			var nomeCampoTabela = "";
+
+			for (var largura = 1; largura <= 4 && largura > 0; largura++) {
+				limitador = largura;
+				resultado += "<tr>";
+				colunaAtual++;
+				for (var larguraReal = 0; larguraReal < limitador; larguraReal++) {
+					switch(larguraReal) {
+						case 0: letraPosicao = "s"; break;
+						case 1: letraPosicao = "p"; break;
+						case 2: letraPosicao = "d"; break;
+						case 3: letraPosicao = "f"; break;
+					}
+					nomeCampoTabela = colunaAtual+letraPosicao;
+
+					resultado += "<td>"+nomeCampoTabela+" = <span id='"+nomeCampoTabela+"' name='campoTebalaDistribuicao'>0</span><td>";
+				}
+				resultado += "</tr>";
+				
+				if (contValor4 == 0 && largura == 4) {
+					largura = 3;
+					contValor4++;
+				}
+				else if (contValor4 == 1) {
+					largura--;
+					largura--;
+				}
+			}
+			$("#resultado").html(resultado);
+		}
+		tabelaDistribuicao();
+		distribuirEletrons();
+	</script>
+</body>
+</html>

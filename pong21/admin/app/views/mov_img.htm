@@ -1,0 +1,192 @@
+
+<br>
+<h1>Movimentação de Imagem</h1>
+<br>
+
+<div class="col-xs-12 text-right">
+	<button class="btn btn-primary" onclick="chamarImgUpView('');chamarImgPastaView('');" accesskey="a">
+		<i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;Atualizar
+	</button>
+	<button class="btn btn-primary" onclick="moverTodos();">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Mover Todos
+	</button>
+</div>
+
+<div class="col-xs-6">
+	<h4>Imagens Salvas no Bancos de Dados</h4>
+
+<div class="input-group">
+	<input type="text" class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" onkeyup="chamarImgUpView(this.value);">
+	<span class="input-group-addon">
+		<i class="fa fa-search" aria-hidden="true"></i>
+	</span>
+</div>
+
+<br>
+
+<div id="imagensView"></div>
+
+</div>
+
+
+
+
+<div class="col-xs-6">
+	<h4>Imagens da Pasta de Upload</h4>
+
+<div class="input-group">
+	<input type="text" class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" onkeyup="chamarImgPastaView(this.value);">
+	<span class="input-group-addon">
+		<i class="fa fa-search" aria-hidden="true"></i>
+	</span>
+</div>
+
+<br>
+
+<div id="imagensPastaView"></div>
+
+</div>
+
+
+<script type="text/javascript">
+	verificaAcess('mov');
+	function chamarImgUpView(filtro){
+		$("#imagensView").html("Carregando...");
+		$.ajax({
+			url:'app/controllers/funcoesController.php',
+			type: 'POST',
+			dataType: 'text',
+			data: {
+				'imgensServidoBd': true,
+				'filtro': filtro
+			}
+		}).done( function(data){
+			$("#imagensView").html(data);
+		});
+	}
+
+	function chamarImgPastaView(filtro){
+		$("#imagensPastaView").html("Carregando...");
+		$.ajax({
+			url:'app/controllers/funcoesController.php',
+			type: 'POST',
+			dataType: 'text',
+			data: {
+				'imgensServidoPasta': true,
+				'filtro': filtro
+			}
+		}).done( function(data){
+			$("#imagensPastaView").html(data);
+		});
+	}
+
+	function moverTodos(){
+		var imagens = document.getElementsByName("imagemServerNBD");
+		for (var i = 0; i < imagens.length; i++) {
+			$.ajax({
+				url:'app/controllers/funcoesController.php',
+				type: 'POST',
+				dataType: 'text',
+				data: {
+					'salvarBD': true,
+					'nome': imagens[i].value,
+					'tipo': "imagem"
+				}
+			}).done( function(data){
+				console.log(data);
+				chamarImgUpView("");
+				chamarImgPastaView("");
+			});
+		}
+	}
+
+	function excluirFile(diretorio, id){
+		// bootbox.confirm({
+		// 	title: "Tem certeza que deseja realizar esta operação?",
+		// 	message: ".",
+		// 	buttons: {
+		// 		confirm: {
+		// 			label: 'Sim',
+		// 			className: 'btn-success'
+		// 		},
+		// 		cancel: {
+		// 			label: 'Não',
+		// 			className: 'btn-danger'
+		// 		}
+		// 	},
+		// 	callback: function (result) {
+		// 		if (result) {
+
+					var param = "";
+					if (diretorio == "") {
+						param  = {
+							'removerImagem': true,
+							'id': id
+						}
+					}
+					else if (id == "") {
+						param  = {
+							'removerImagem': true,
+							'diretorio': diretorio
+						}
+					}
+					else {
+						param  = {
+							'removerImagem': true,
+							'diretorio': diretorio,
+							'id': id
+						}
+					}
+					$.ajax({
+						url:'app/controllers/funcoesController.php',
+						type: 'POST',
+						dataType: 'text',
+						data: param
+					}).done( function(data){
+						console.log(data);
+						chamarImgUpView("");
+						chamarImgPastaView("");
+					});
+		// 		}
+		// 	}
+		// });
+	}
+
+	function moverFile(arquivo){
+		// bootbox.confirm({
+		// 	title: "Tem certeza que deseja realizar esta operação?",
+		// 	message: ".",
+		// 	buttons: {
+		// 		confirm: {
+		// 			label: 'Sim',
+		// 			className: 'btn-success'
+		// 		},
+		// 		cancel: {
+		// 			label: 'Não',
+		// 			className: 'btn-danger'
+		// 		}
+		// 	},
+		// 	callback: function (result) {
+		// 		if (result) {
+					$.ajax({
+						url:'app/controllers/funcoesController.php',
+						type: 'POST',
+						dataType: 'text',
+						data: {
+							'salvarBD': true,
+							'nome': arquivo,
+							'tipo': "imagem"
+						}
+					}).done( function(data){
+						console.log(data);
+						chamarImgUpView("");
+						chamarImgPastaView("");
+					});
+		// 		}
+		// 	}
+		// });
+	}
+
+	chamarImgUpView("");
+	chamarImgPastaView("");
+</script>

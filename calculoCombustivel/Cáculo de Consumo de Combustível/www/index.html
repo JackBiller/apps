@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cálculo de Combustivel</title>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+	<script type="text/javascript" src="js/jQuery.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">      
+
+	<!-- Scrips padrão -->
+	<script type="text/javascript" src="js/config/element.js"></script>
+	<script type="text/javascript" src="js/config/funcoes.js"></script>
+	<script type="text/javascript" src="js/config/menu.js"></script>
+	<script type="text/javascript" src="js/config/formulario.js"></script>
+	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="js/valorPorExtenco.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+
+	<script type="text/javascript" src="js/bootbox.js"></script>
+	<script type="text/javascript" src="js/masked2.js"></script>
+	<script type="text/javascript" src="js/masked.js"></script>
+	<script type="text/javascript" src="js/toast.js"></script>
+	<script type="text/javascript" src="js/maskmoney.js"></script>
+	<script type="text/javascript" src="js/moment.js"></script>
+
+	<!-- Biblioteca dataList usando Jquery  -->
+	<link href="lb/jquery-flexdatalist/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
+	<script src="lb/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+
+	<script src="js/jquery.maskMoney.min.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/toast.css">
+
+	<meta charset="utf-8">
+</head>
+<body>
+	<center>
+		<h1>Cálculo para consumo de combustivel</h1>
+		<table class='table'>
+			<tr>
+				<td>
+					Local de Destino
+					<input class='form-control' type="text" id="destino">
+				</td>
+				<td>
+					Distância da viagem
+					<input class='form-control' type="tel" id="distancia">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Peço do Etanol
+					<input class='form-control' type="tel" id="preco_etanol">
+				</td>
+				<td>
+					Preço da Gasolina
+					<input class='form-control' type="tel" id="preco_gasolina">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Media por Litro do Etanol
+					<input class='form-control' type="tel" id="media_etanol">
+				</td>
+				<td>
+					Media por Litro da Gasolina
+					<input class='form-control' type="tel" id="media_gasolina">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<button onclick="calcular()" class="btn btn-primary btn-block" style="font-size: 25px;">
+						<i class="fa fa-calculator"></i>&nbsp;&nbsp;Calcular
+					</button>
+				</td>
+			</tr>
+		</table>
+
+
+		<div id="resulado"></div>
+		<div style="position: fixed; bottom: 0px;text-align: center; background-color: white; width: 100%;font-size: 15px;">
+			<br><br><center>
+				<b>
+					<i style="font-size: 18px;" class="fa fa-code"></i>&nbsp;&nbsp;Developer: Jack Biller
+				</b><br><span style="color: white">.</span>
+			</center>
+		</div>
+	</center>
+
+	<script type="text/javascript">
+		function calcular(){
+			var destino = val("destino");
+			var distancia = val("distancia");
+			var preco_gasolina = val("preco_gasolina");
+			var preco_etanol = val("preco_etanol");
+			var media_gasolina = val("media_gasolina");
+			var media_etanol = val("media_etanol");
+			var textoResposta = "";
+
+			var cosumo_gasolina = 0;
+			var cosumo_etanol = 0;
+
+			if (
+				destino == ""			||
+				distancia == "" 		||
+				preco_etanol == "" 		||
+				preco_gasolina == "" 	||
+				media_etanol == "" 		||
+				media_gasolina == ""
+			) toastGeral("error", "Por favor preencha todos os dados!");
+
+			else {
+				cosumo_gasolina = (parseFloat(distancia) / parseFloat(media_gasolina)) * parseFloat(preco_gasolina);
+				cosumo_gasolina = cosumo_gasolina.toFixed(2);
+				cosumo_etanol = (parseFloat(distancia) / parseFloat(media_etanol)) * parseFloat(preco_etanol);
+				cosumo_etanol = cosumo_etanol.toFixed(2);
+
+				if (cosumo_gasolina > cosumo_etanol) {
+					textoResposta = "Com <b>Etanol</b> você irá poupar mais para ir até " + destino + " que fica a " + distancia + "Km de distância";
+				}
+				else if (cosumo_gasolina < cosumo_etanol) {
+					textoResposta = "Com <b>Gasolina</b> você irá poupar mais para ir até " + destino + " que fica a " + distancia + "Km de distância";
+				}
+				else {
+					textoResposta = "Tanto faz Etanol ou Gasolina você irá gastar o mesmo para ir até " + destino + " que fica a " + distancia + "Km de distância";
+				}
+
+				/* Configurações Gerais descrição */
+				textoResposta = "<div class='col-xs-12'><i class='fa fa-asterisk' style='color:red;'></i>&nbsp;&nbsp;"+textoResposta+"</div>";
+
+				/* Mostrar o consumo de Ambos os tipos de Combustiveis */
+				textoResposta += "<table class='table'>";
+				textoResposta += 	"<tr>";
+				textoResposta += 		"<td>";
+				textoResposta += 			"Consumo com Etanol: ";
+				textoResposta += 			"<input class='form-control' type='text' value='R$ "+cosumo_etanol.replace(".", ",")+"' disabled>";
+				textoResposta += 		"</td>";
+				textoResposta += 		"<td>";
+				textoResposta += 			"Consumo com Gasolina: ";
+				textoResposta += 			"<input class='form-control' type='text' value='R$ "+cosumo_gasolina.replace(".", ",")+"' disabled>";
+				textoResposta += 		"</td>";
+				textoResposta += 	"</tr>";
+				textoResposta += "</table>";
+
+				setInnerHTML("resulado", textoResposta);
+			}
+		}
+
+		function val(id){ return document.getElementById(id).value; }
+		/* function html(id){ return document.getElementById(id).innerHTML; } */
+		function setInnerHTML(id, value){ document.getElementById(id).innerHTML = value; }
+	</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+
+
+<h1>Adicionar: Usuário</h1>
+
+<div class="text-right">
+	<a href="principal.php#!usuario_lista" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+<div class="col-md-4">
+	<br>Nome &nbsp;&nbsp;
+	<input type="text" maxlength="200" class="form-control" id="nome_usuario" accesskey="i">
+</div>
+<div class="col-md-4">
+	<br>Login &nbsp;&nbsp;
+	<input type="text" maxlength="3" class="form-control" id="login_usuario" >
+</div>
+<div class="col-md-4">
+	<br>Senha &nbsp;&nbsp;
+	<input class="form-control" type='password' id="senha_usuario" >
+</div>
+<div class="col-md-4">
+	<br>Nível Acesso &nbsp;&nbsp;
+	<div id="nivel_acessoDiv"></div>
+</div>
+<div class="col-md-4">
+	<br>Ativo? &nbsp;&nbsp;
+	<select class="form-control" id="bool_ativo_usuario" >
+		<option value="1" selected>Sim</option>
+		<option value="0">Não</option>
+	</select>
+</div>
+	<div class="col-md-12 text-center">
+		<br>
+		
+		<button class="btn btn-success" onclick='gravarRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Gravar
+		</button>
+	</div>
+</div>
+
+<script type="text/javascript">
+	verificaAcess('usuario');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/usuario_ajax_adiciona_usuario.js"></script>
+
+<!-- <script type="text/javascript" src="app/js/combo/nivel_acessoCombo.js"></script> -->

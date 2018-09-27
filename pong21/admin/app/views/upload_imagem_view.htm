@@ -1,0 +1,47 @@
+<br><br>
+
+<ul class="nav nav-tabs">
+	<li>
+		<a href="principal.php#!/upload_imagem">Upload de Imagem</a>
+	</li>
+	<li class="active">
+		<a href="principal.php#!/upload_imagem_view">Visualizar Imagens</a>
+	</li>
+</ul>
+
+
+<br>
+<h1>Visualizar Imagens</h1>
+<br>
+
+<div class="input-group">
+	<input type="text" class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" onkeyup="chamarImgUpView(this.value);">
+	<span class="input-group-addon">
+		<i class="fa fa-search" aria-hidden="true"></i>
+	</span>
+</div>
+
+<br>
+
+<div id="imagensView"></div>
+
+<script type="text/javascript">
+	verificaAcess('upload');
+	function chamarImgUpView(filtro){
+		$("#imagensView").html("Carregando...");
+		$.ajax({
+			url:'app/controllers/funcoesController.php',
+			type: 'POST',
+			dataType: 'text',
+			data: {
+				'listarArquivo': true,
+				'filtro': filtro,
+				'tipo': "img"
+			}
+		}).done( function(data){
+			$("#imagensView").html(data);
+		});
+	}
+	
+	chamarImgUpView("");
+</script>

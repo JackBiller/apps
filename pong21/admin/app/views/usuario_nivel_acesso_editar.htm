@@ -1,0 +1,46 @@
+
+
+<h1>Editar: Nível Acesso</h1>
+
+<div class="text-right">
+	<a href="principal.php#!usuario_nivel_acesso" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+<div class="col-md-4">
+	<br>Descrição &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="200" class="form-control" id="descricao_nivel_acesso" accesskey="i">
+</div>
+
+
+<div class="col-md-8">
+	<br>Áreas de Acesso &nbsp;&nbsp;<span style='color: red'>*</span>
+	<div id="conteudoAreas_acesso">Carregando Áreas...</div>
+</div>
+
+<!-- <br>Ativo? &nbsp;&nbsp;<span style='color: red'>*</span>
+<select class="form-control" id="bool_ativo_nivel_acesso" >
+	<option value="1" selected>Sim</option>
+	<option value="0">Não</option>
+</select> -->
+	<div class="col-md-12 text-center">
+		<br>
+		<input type="hidden" id="usuario_id">
+		<script>$("#usuario_id").val($("#usuario").val())</script>
+
+		<button class="btn btn-success" onclick='atualizarrRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Atualizar
+		</button>
+	</div>
+</div>
+
+<script type="text/javascript">
+	verificaAcess('usuario');
+</script>
+
+
+<script type="text/javascript" src="app/js/ajax/usuario_ajax_edita_nivel_acesso.js"></script>
+
+<!-- <div id="scriptsAdicionais"></div> -->

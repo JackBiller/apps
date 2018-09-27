@@ -1,0 +1,24 @@
+
+<h1>Jogos</h1>
+
+<div class="col-md-4 col-xs-12">
+	<input class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" id="pesquisa_jogos" accesskey="b" onkeyup='buscar_jogos()'>
+</div>
+
+
+
+<div class="col-md-8 col-xs-12 text-right">
+	<a href="principal.php#!adicionar_jogos" class="btn btn-success" accesskey="a">
+		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Adicionar Jogos
+	</a>
+</div>
+
+<br><br>
+
+<div id="conteudoJogos"></div>
+
+<script type="text/javascript">
+	verificaAcess('jogos');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/ajax_lista_jogos.js"></script>

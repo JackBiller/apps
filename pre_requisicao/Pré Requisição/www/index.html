@@ -1,0 +1,261 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<link rel="shortcut icon" href="./favicon.ico" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EDGE; charset=utf-8" />
+	<title>Sanhidrel Engekit - Intranet</title>
+
+	<script type="text/javascript">
+		if (localStorage.IP) localStorage.setItem("IP", "192.168.100.15:8088");
+		
+		var caminhoRequisicao = "http://" + localStorage.getItem("IP") + "/intranet_linux/";
+	</script>
+
+	<!-- Estilos -->
+	<link rel="stylesheet" type="text/css" href="lb/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="lb/css/font-awesome/css/font-awesome.min.css">
+
+	<!-- Jquery -->
+	<script type="text/javascript" src="lb/jQuery.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="lb/bootstrap.js" type="text/javascript"></script>
+
+
+	<!-- Combo de seleção -->
+	<link href="lb/jquery-flexdatalist/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
+	<script src="lb/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+
+
+	<!-- Scripts -->
+	<script type="text/javascript" src="lb/scripts.js"></script>
+</head>
+
+<body>
+<body><!-- onLoad="popWindow()" -->
+<!-- <div class="container"> -->
+	<div class="header">
+		<a href="#" onclick="setarIp()">
+			<img src="./imagens/nova2.png" alt="Inserir o logotipo aqui" name="Insert_logo" width="100%" id="Insert_logo" style="background-color: #C6D580; display:block;" />
+		</a>
+		<a href="#"></a><!-- end .header -->
+	</div>
+
+	<!-- <div class="content"><br> -->
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h2>
+					<strong>
+						<font color=#63000>Utilize o seu acesso da CDI:</font>
+					</strong>
+				</h2>
+				<div class="col-sm-6 col-sm-offset-3">
+					<form id="formLogin" action="#">
+						<br>
+						<div class="text-left">
+							<label><i class="fa fa-user-o"></i> Usuário</label>
+							<input type="text" onfocus="ocultaRodape()" onblur="mostraRodape()" class="form-control" id="usuario" maxlength="10" onkeyup="up(this)" required />
+						</div>
+						<br>
+						<div class="text-left">
+							<label><i class="fa fa-key"></i> Senha</label>
+							<input type="password" onfocus="ocultaRodape()" onblur="mostraRodape()" class="form-control" id="senha" maxlength="10" required />
+						</div>
+						<br>
+						<input type="submit" value="Entrar" class="btn btn-block btn-primary" />
+					</form>
+				</div>
+			</div>
+		</div>
+	<!-- </div> -->
+	<!-- end .container -->
+<!-- </div> -->
+
+<div class="footer" id='rodape'>
+	<p>Sanhidrel - Engekit. Todos os direitos reservados.</p>
+	<!-- end .footer -->
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal para Configurar Ip -->
+<div class="modal fade" id="modalConfigIp" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" id="fecharModalIpBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Configurar IP: </h4>
+			</div>
+			<div class="modal-body">
+				<div id="autentica">
+					Login:
+					<input type="text" class="form-control" id="loginIP">
+					<br>
+					Senha:
+					<input type="password" class="form-control" id="senhaIP">
+					<br>
+					<button class="btn btn-primary" onclick="logarIP()">
+						Configurar
+					</button>
+				</div>
+				<div id="ipChange" class="hidden">
+					IP:
+					<input type="text" class="form-control" id="ipModal">
+					<br>
+					<button class="btn btn-success" onclick="definirIP()">
+						Definir
+					</button>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<!-- <button type="button" class="btn btn-success" onclick="confirmItem(true)">
+					Salvar
+				</button> -->
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+	.footer{
+		position: fixed;
+		bottom: 22px;
+		border-top-style: solid;
+		width: 100%;
+		padding-left: 2%;
+		background-color: #F2F2F2;
+	}
+	/*.footer {
+		padding: 10px 0;
+		position: relative;/* isso possibilita que o hasLayout do IE6 faça a limpeza corretamente. */
+		/*clear: both; /* essa propriedade de limpeza força o contêiner a reconhecer o conteúdo das colunas e onde elas terminam. */
+	/*}*/
+</style>
+
+<script type="text/javascript">
+
+	if(localStorage.usuario_Global){
+		window.location.assign("principal.html");
+	}
+
+
+	function ocultaRodape(){
+		$("#rodape")[0].style.display = "none";
+	}
+	function mostraRodape(){
+		$("#rodape")[0].style.display = "block";
+	}
+
+
+	$("#formLogin").submit( function(ex){
+		ex.preventDefault();
+
+		var usuario = $("#usuario").val();
+		var senha = $("#senha").val();
+
+		console.log(caminhoRequisicao + "lb/controllerAutencitica.php");
+		$.ajax({
+			url: caminhoRequisicao + "lb/controllerAutencitica.php",
+			type: 'POST',
+			dataType: 'text',
+			data: {
+				'validaUsuario': true,
+				'usuario': usuario,
+				'senha': senha
+			},
+			error: function(){
+				console.log("Erro na requisição");
+			}
+		}).done( function(data){
+			console.log(data);
+			try{
+				var dataObj = JSON.parse(data);
+				console.log(dataObj);
+				if (dataObj.debug == "OK") {
+					localStorage.setItem("usuario_Global", data);
+					window.location.assign("principal.html");
+				} else {
+					alert("Usuáiro inválido");
+					$("#usuario").val("");
+					$("#senha").val("");
+				}
+			} catch(error){
+				console.error(error);
+				alert("Login inválido!");
+				$("#usuario").val("");
+				$("#senha").val("");
+			}
+		});
+	});
+	
+	function up(lstr){
+		var str = lstr.value;
+		lstr.value = str.toUpperCase();
+	}
+	function down(lstr){
+		var str = lstr.value;
+		lstr.value = str.toLowerCase();
+	}
+
+
+	$('#modalConfigIp').on('hidden.bs.modal', function () {
+		$("#autentica")[0].className = "";
+		$("#ipChange")[0].className = "hidden";
+		$("#loginIP").val("");
+		$("#senhaIP").val("");
+	});
+	// $("#modalAdicionaItem").on('shown.bs.modal', function(){
+	// 	$("#requisitarItem").focus();
+	// });
+
+	function setarIp(){
+		$("#modalConfigIp").modal('show');
+	}
+
+
+	function logarIP(){
+		var loginIP = $("#loginIP").val();
+		var senhaIP = $("#senhaIP").val();
+
+		if( (loginIP == "ADM" || loginIP == "adm" || loginIP == "Adm") && senhaIP == "2018" ){
+			$("#autentica")[0].className = "hidden";
+			$("#ipChange")[0].className = "";
+			$("#loginIP").val("");
+			$("#senhaIP").val("");
+		}
+		else alert("Login inválido!");
+	}
+
+	function definirIP(){
+		var ip  = $("#ipModal").val();
+		localStorage.setItem("IP", ip);
+		$("#modalConfigIp").modal('hide');
+		caminhoRequisicao = "http://" + ip + "/intranet_linux/";
+	}
+
+</script>
+</body>
+</html>

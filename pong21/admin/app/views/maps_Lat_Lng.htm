@@ -1,0 +1,136 @@
+<h1>Consultar Latitude e Longitude</h1>
+<br>
+
+<div id="resultado"></div>
+
+<br>
+
+<div class="row">
+<div class="col-md-4">
+	<label>Endereco: </label>
+	<input type="text" class="form-control" id="endereco" accesskey="i">
+</div>
+<div class="col-md-4">
+	<label>Número: </label>
+	<input type="number" class="form-control" id="numero">
+</div>
+<div class="col-md-4">
+	<label>Cidade: </label>
+	<input type="text" class="form-control" id="cidade">
+</div>
+<div class="col-md-4">
+	<label>CEP: </label>
+	<input type="text" class="form-control" id="cep" rel=cep>
+</div>
+
+
+<br><br>
+
+<div class="col-md-12 text-center">
+	<button onclick="pesquisarLatLng()" class="btn" accesskey="b">
+		<i class="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;Consultar
+	</button>
+</div>
+<br>
+<div class="col-md-12" id="divObservacao">
+	<h4>
+		<span style="color: red"><b><i class="fa fa-star" aria-hidden="true"></i> Observação:</b></span>&nbsp;
+		Para usar este recurso deve-se estar usando o navegador <b>Google Chrome</b> e com um <b>plugin "Allow-Control-Allow-Origin"</b> instalado e habilitado
+	</h4>
+</div>
+<br>
+
+
+<script type="text/javascript">
+verificaAcess('mapa');
+
+function pesquisarLatLng(){
+	var urlGoogleMaps = "https://maps.google.com/maps/api/geocode/json";
+
+	var endereco = $("#endereco").val();
+	endereco = formatarEndereco(endereco);
+	var numero = $("#numero").val();
+	var cidade = $("#cidade").val();
+	cidade = formatarCidade(cidade);
+	var cep = $("#cep").val();
+	cep = formatarCep(cep);
+	
+	var chaveGoogleMaps = "&key=AIzaSyAhiMsOZoOhu4m5SHG4l_ij6WEHcJdf71A";
+	// AIzaSyCoMdP7QZuhbnjCzwcBjqydWDaCzUisWlA - Thiago
+	// AIzaSyAhiMsOZoOhu4m5SHG4l_ij6WEHcJdf71A - Jack
+
+	var resultado = "";
+
+	if (
+		endereco 	!= "" &&
+		numero 		!= "" &&
+		cidade 		!= "" &&
+		cep 		!= ""
+	) {
+		$.ajax({
+			type: 'GET',
+			url: urlGoogleMaps+"?address="+endereco+","+numero+","+cidade+","+cep+chaveGoogleMaps,
+			contentType: "application/json",
+			jsonpCallback: "localJsonpCallback"
+		}).done( function(data){
+			console.log(data);
+			if(data.status == "OK"){
+				for (var i = 0; i < data.results.length; i++) {
+					geometry = data.results[i].geometry;
+					for(i in geometry){
+						if ( geometry[i].lat != undefined && geometry[i].lng != undefined) {
+							latitude = geometry[i].lat;
+							logitude = geometry[i].lng;
+						}
+					}
+				}
+				resultado += "<h3><b>Latitude: </b>"+latitude+"<h3>";
+				resultado += "<h3><b>Longitude: </b>"+logitude+"<h3>";
+				$("#resultado").html(resultado);
+				$("#divObservacao").html("");
+			} else {
+				toast.danger("Endereço Inválido!");
+				$("#resultado").html("")
+			}
+		});
+	} else {
+		toast.danger("Verifique se todos os campos forama preenchidos!");
+	}
+}
+
+function formatarCep(cep){
+	cep = cep.replace("-", "");
+
+	return cep;
+}
+
+function formatarCidade(cidade){
+	cidade = cidade.replace(" ", "+");
+
+	return cidade;
+}
+
+function formatarEndereco(endereco){
+	endereco = endereco.replace("rua ", "");
+	endereco = endereco.replace("Rua ", "");
+	endereco = endereco.replace("av ", "");
+	endereco = endereco.replace("av ", "");
+	endereco = endereco.replace("avenida ", "");
+	endereco = endereco.replace("Avenida ", "");
+	endereco = endereco.replace("tr ", "");
+	endereco = endereco.replace("Tr ", "");
+	endereco = endereco.replace("travessa ", "");
+	endereco = endereco.replace("Travessa ", "");
+	endereco = endereco.replace("praça ", "");
+	endereco = endereco.replace("Praça ", "");
+
+
+	// tem que ser o último
+	endereco = endereco.replace(" ", "+");
+	return endereco;
+}
+
+mask();
+
+
+</script>

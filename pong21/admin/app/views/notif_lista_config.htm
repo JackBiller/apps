@@ -1,0 +1,24 @@
+
+<h1>Configurar Notificações</h1>
+
+<div class="col-md-4 col-xs-12">
+	<input class="form-control" placeholder="Pesquisar..." aria-describedby="basic-addon2" id="pesquisa_notificacoes_config" accesskey="b" onkeyup='buscar_notificacoes_config()'>
+</div>
+
+
+
+<div class="col-md-8 col-xs-12 text-right">
+	<a href="principal.php#!notif_adicionar_notificacoes" class="btn btn-success" accesskey="a">
+		<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp;Adicionar Solicitação de Notificações
+	</a>
+</div>
+
+<br><br>
+
+<div id="conteudoNotificacoes_config"></div>
+
+<script type="text/javascript">
+	verificaAcess('notif');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/notif_ajax_lista_notificacoes_config.js"></script>

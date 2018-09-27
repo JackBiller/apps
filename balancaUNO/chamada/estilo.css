@@ -1,0 +1,112 @@
+.estiloCamposSenha{
+	min-height: 200px;
+	height:auto !important;
+	height:200px;
+	max-height: 200px;
+	border-style: solid;
+	border-width: thin;
+}
+.estiloCamposSenha h2 {
+	margin-top: 10px;
+	font-size: 20px;
+}
+.estiloCamposSenha h1 {
+	margin-top: 10px;
+	margin-bottom: 0px;
+	font-size: 25px;
+}
+
+.linhaStatus{
+	position: absolute;
+	height: 20px;
+	margin-left: -15px;
+	bottom: 0px;
+	/*margin-top: 25px;*/
+	width: 100%;
+}
+
+
+
+@media screen and (min-width: 450px)  {
+	[data-role=page]{height: 100% !important; position:relative !important; top:0 !important;}
+
+	.legenda{
+		border-style: ridge;
+		width: 50px;
+		height: 25px;
+	}
+	.btn {
+		/*height: 40px;*/
+		font-size: 20px;
+	}
+	.form-control {
+		height: 35px;
+		font-size: 27px;
+	}
+	footer {
+		position: fixed;
+		height: 60px;
+		bottom: 0px;
+		width: 100%;
+	}
+
+	.fontTable{
+		font-size: 25px;
+		color: #fff;
+		margin-bottom: 0px;
+	}
+}
+
+@media screen and (max-width: 450px) {
+	footer {
+		position: fixed;
+		height: 45px;
+		bottom: 0px;
+		width: 100%;
+	}
+
+	.fontTable{
+		font-size: 20px;
+		color: #fff;
+	}
+}
+
+.corRed{color: red;}
+.corVerde{color: green;}
+
+.botoesTelaPedidoImprimir{
+	color:blue;
+}
+
+
+@font-face {
+	font-family: font_titulo2;
+	src: url(../fonts/Crown_Heights.ttf);
+}
+@font-face {
+	font-family: font_titulo3;
+	src: url(../fonts/Shania&Heinz_PersonalUseOnly.ttf);
+}
+@font-face {
+	font-family: font_titulo;
+	src: url(../fonts/Black_Party.ttf);
+}
+@font-face {
+	font-family: font_texto2;
+	src: url(../fonts/Lobster 1.4.otf);
+}
+@font-face {
+	font-family: font_texto;
+	src: url(../fonts/Uptown-Market-Upright-Demo.ttf);
+}
+
+body{
+	font-family: calibri;
+	font-size: 17px;
+}
+h1{
+	font-family: font_texto;
+}
+h2{
+	font-family: calibri;
+}

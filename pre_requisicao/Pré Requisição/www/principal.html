@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="shortcut icon" href="./favicon.ico" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EDGE; charset=utf-8" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+
+	<title>Sanhidrel Engekit - Intranet</title>
+
+	<script type="text/javascript">
+		// var caminhoRequisicao = "http://192.168.100.15:8088/intranet_linux/";
+		var caminhoRequisicao = "http://" + localStorage.getItem("IP") + "/intranet_linux/";
+
+		var usuario_Global = JSON.parse(localStorage.getItem("usuario_Global"));
+	</script>
+
+	<!-- Estilos -->
+	<link rel="stylesheet" type="text/css" href="lb/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="lb/css/font-awesome/css/font-awesome.min.css">
+
+	<!-- Jquery -->
+	<script type="text/javascript" src="lb/jQuery.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="lb/bootstrap.js" type="text/javascript"></script>
+
+
+	<!-- Combo de seleção -->
+	<link href="lb/jquery-flexdatalist/jquery.flexdatalist.min.css" rel="stylesheet" type="text/css">
+	<script src="lb/jquery-flexdatalist/jquery.flexdatalist.min.js"></script>
+
+
+	<!-- Scripts -->
+	<script type="text/javascript" src="lb/scripts.js"></script>
+	<script type="text/javascript">
+		if (usuario_Global.dataLogada != pegarData() ) {
+			window.location.assign("index.html");
+		}
+	</script>
+</head>
+<body>
+
+	<div class="header">
+		<a href="#" onclick="logOut()">
+			<img src="./imagens/nova2.png" alt="Inserir o logotipo aqui" name="Insert_logo" width="100%" id="Insert_logo" style="background-color: #C6D580; display:block;" />
+		</a>
+		<a href="#"></a><!-- end .header -->
+	</div>
+		<br>Olá, <span id="nomeUsuario"></span><br>
+	<!-- <div class="text-center"> -->
+		<h2>Pré requisição de produto</h2> 
+	<!-- </div> -->
+	<div class="row">
+			<!-- Conteudio intranet_pre_requi.php -->
+
+			<!-- <?php  include('pre_requisicao.php');?> -->  <!-- <<<<<<<<<<- - - Original descomentado -->
+			<div class='col-xs-12'>
+				<div class='col-md-6' style='padding-left: 15px;border-right: 2.5px solid gray;'>
+					<table width='100%' class='table'>
+						<tr>
+							<td width='25%'>
+								Código:
+								<input type='text' class='form-control' id='codigoProduto'>
+							</td>
+							<td width='75%'>
+								Descrição:
+								<input type='text' class='form-control' id='descricaoProduto'>
+							</td>
+						</tr>
+					</table>
+					<table width='100%' class='table'>
+						<tr>
+							<td width='50%'>
+								Marca:
+								<input type='text' class='form-control' id='marcaProduto'>
+							</td>
+							<td width='50%'>
+								Cor: 
+								<input type='text' class='form-control' id='corProduto'>
+							</td>
+						</tr>
+					</table>
+					<button class='btn btn-primary' onclick='filtrarProdutos()' title="Consultar produtos conforme filtros">
+						<i class='fa fa-search'></i>&nbsp;&nbsp;&nbsp;Consultar
+					</button>
+					<button class="btn btn-info" onclick="novoPreRequi()" title="Incluir nova Pré Requisição">
+						<i class="fa fa-file-o"></i>&nbsp;&nbsp;&nbsp;Novo
+					</button>
+					<br><br><br>
+					<div id='resultado' class='text-center table-responsive'></div>
+				</div>
+				<div class='col-md-6'>
+					<ul class="nav nav-tabs">
+						<li role="presentation" class="active" name='menuPre' id='preHead' onclick="buscaPreRequi();mudarPagina(this, 'listaPreRequi')">
+							<a href="#">Pré Requisições</a>
+						</li>
+						<li role="presentation" name='menuPre' id='itemPreHead' onclick="mudarPagina(this, 'listaItemsPreReqi')">
+							<a href="#">Itens da Pré-Requisição</a>
+						</li>
+					</ul>
+					<div id="listaPreRequi" name='conteudoMenu'>
+						<h3>Pré Requisições</h3>
+						<!-- <div class='col-xs-12 text-right'> -->
+						<table width="100%" style="margin-top: -40px;margin-bottom: 10px;">
+							<tr>
+								<td width="50%"></td>
+								<td width="50%">
+									<input type="date" id="dataPreRequisicao" onchange="buscaPreRequi()" class="form-control">
+									<script type="text/javascript">
+										// document.getElementById("dataPreRequisicao").value = pegarData();
+									</script>
+								</td>
+							</tr>
+						</table>
+						<!-- </div> -->
+						<div id="divListaPreRequi" class="table-responsive"></div>
+					</div>
+					<div id="listaItemsPreReqi" name='conteudoMenu' class="hidden">
+						<h3>Itens da Pré Requisição</h3>
+
+						<!-- Obra: -->
+						<div id="divOsIdCombo">
+							<input type="text" id="obraPedido" class="form-control">
+						</div>
+						<br>
+
+						Referência: 
+						<input type="text" id="referenciaPedido" class="form-control">
+						<br>
+
+						Observação:
+						<input type="text" id="observacaoPedido" class="form-control">
+						<br>
+
+						Data Limite:
+						<input type="date" id="dataLimite" class="form-control">
+						<br>
+
+						Produtos:
+						<div id="itensBuscados">
+							<h3 style="text-align: center;">Nenhum Produto</h3>
+							<!-- <table class="table" style="font-size:10px;margin:0;" border="1">
+			 					<tr>
+			 						<td width="40%"><b>Item</b></td>
+			 						<td width="25%"><b>Requisitar</b></td>
+			 						<td width="5%"><b>UN</b></td>
+			 						<td width="20%"><b>Estoque</b></td>
+			 						<td width="10%"></td>
+			 					</tr>
+			 				</table> -->
+						</div>
+						<br>
+
+						<div style="width: 100%" class="text-right">
+							<button class="btn btn-success" onclick="confirmItem(false)" title="Salvar dados de Pré Requisição">
+								<i class="fa fa-floppy-o"></i>&nbsp;&nbsp;Salvar
+							</button>
+							<!-- &nbsp;&nbsp; -->
+							<!-- <button class="btn btn-primary" onclick="imprimirReuisicao()" title="Imprimir Pré Requisição">
+								<i class="fa fa-print"></i>&nbsp;&nbsp;Imprimir
+							</button> -->
+							<!-- &nbsp;&nbsp; -->
+							<button class="btn btn-warning" onclick="confirmRequisicao()" title="Enviar Pré Requisição para aprovação do gerente">
+								<i class="fa fa-arrow-right"></i>&nbsp;&nbsp;Enviar p/ Aprovação
+							</button>
+							<!-- &nbsp;&nbsp; -->
+							<button class="btn btn-danger" onclick="apagarPreRequisicao()" title="Cancelar Pré Requisição completa">
+								<i class="fa fa-times"></i>&nbsp;&nbsp;Cancelar
+							</button>
+						</div>
+					</div>
+				</div>
+				<br><br><br><br><br><br><br><br><br><br>
+			</div>
+		</div>
+
+	</div>
+
+
+	<div class="footer">
+		<p>Sanhidrel - Engekit. Todos os direitos reservados.</p>
+		<!-- end .footer -->
+	</div>
+
+
+
+
+
+<!-- Modal para Adicionar Item -->
+<div class="modal fade" id="modalAdicionaItem" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" id="fecharModalIpBottun" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Adicionar Produto: </h4>
+			</div>
+			<div class="modal-body">
+				Descrição:
+				<input type="text" class="form-control" id="descricaoItem" disabled>
+				<br>
+				Requisitar:
+				<input type="text" class="form-control" id="requisitarItem">
+				<br>
+				<table width="100%">
+					<tr>
+						<td width="50%">
+							Unidade de Medida:
+							<input type="text" class="form-control" id="unidadeMedidaItem" disabled>
+						</td>
+						<td width="50%">
+							Estoque:
+							<input type="text" class="form-control" id="estoqueItem" disabled>
+						</td>
+					</tr>
+					<tr>
+						<td width="50%">
+							Marca:
+							<input type="text" class="form-control" id="marcaItem" disabled>
+						</td>
+						<td width="50%">
+							Cor:
+							<input type="text" class="form-control" id="corItem" disabled>
+						</td>
+					</tr>
+				</table>
+				<input type="hidden" id="codigoReferenciaItem">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="confirmItem(true)">
+					Salvar
+				</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					Fechar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+	var carrega = "<img src='lb/carrega.gif' width='60%'>";
+	var mostra = "show";
+	var item_Global = "";
+	var itenConfirmado = true;
+	var idPreRequi = 0;
+	var numItens = 0;
+	$("#descricaoProduto").blur(function(){ filtrarProdutos() });
+
+	function logOut(){
+		if(confirm("Deseja sair da aplicação")){
+			localStorage.removeItem("usuario_Global");
+			window.location.assign("index.html");
+		}
+	}
+
+	$("#nomeUsuario").html(usuario_Global.usuarioNome);
+	$("#nomeUsuario").css("color", "rgb(79, 205, 247)");
+	/* 125,177,230 */
+</script>
+<script type="text/javascript" src="scriptPreReq.js"></script>
+<style type="text/css">
+	body{
+		/*background-color: #42413C;*/
+	}
+	/*.footer{
+		position: fixed;
+		bottom: 20px;
+		border-top-style: solid;
+		width: 100%;
+		padding-left: 2%;
+	}*/
+	.footer {
+		padding: 10px 0;
+		background-color: #F2F2F2;
+		position: relative;/* isso possibilita que o hasLayout do IE6 faça a limpeza corretamente. */
+		clear: both; /* essa propriedade de limpeza força o contêiner a reconhecer o conteúdo das colunas e onde elas terminam. */
+	}
+
+	#buttonMini{
+		position: absolute;
+		right: 15px;
+		font-size: 10px;
+	}
+	h3{
+		font-size: 18px;
+	}
+	h2{
+		font-size: 20px;
+	}
+</style>
+</body>
+</html>

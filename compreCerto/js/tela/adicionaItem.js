@@ -1,0 +1,72 @@
+
+function retornaTelaAdicionaItem(){
+	var conteudo = "";
+
+	/* Tela Adicionar Item */
+	conteudo += 	"<div id='conteudoAdicionaPedidoItem' name='telaGeralAddPedido' class='hidden'>";
+	conteudo += 		retornaCabecarioPedido();
+	conteudo +=		"<table class='table' style='margin-top:-15px'>";
+	conteudo += 		"<tr>";
+	conteudo += 			"<td colspan='2' style='text-align:center;padding-bottom:0px;'>";
+	conteudo += 				"<h4 style='margin-bottom:0px;'>Adicionar Item</h4> <br>";
+	conteudo += 			"</td>";
+	conteudo += 		"</tr>";
+	// conteudo += 		"<tr>";
+	conteudo += 	"</table>";
+	// conteudo +=			"<div class='col-xs-12'>";
+	// conteudo += 			"<div class='col-xs-6 col-sm-8'></div>";
+	conteudo +=				"<div class='col-xs-4 col-md-3 col-lg-2'>";
+	conteudo += 				"Codigo";
+	conteudo += 				"<input type='tel' class='form-control' id='codigoItem' onkeyup=\"mudarItem(this.value)\">";
+	conteudo += 			"</div>";
+	// conteudo += 		"</div>";
+	// conteudo += 			"<div class='col-xs-11 col-sm-1'></div>";
+	conteudo += 		"<div class='col-xs-8 col-md-9 col-lg-10'>";
+	conteudo += 			"Item";
+	conteudo += 			"<div id='itemComboDatalist'></div>";
+	conteudo += 		"</div>";
+	conteudo += 		"<br><br>";
+	conteudo += 		"<div class='col-sm-6'>";
+	conteudo += 			"Quantidade";
+	conteudo += 			"<table>";
+	conteudo += 				"<tr>";
+	conteudo += 					"<td width='50%'>";
+	conteudo += 						"<input type='tel' class='form-control' id='qdtItem' value='1' onkeyup='selecionarUnidade()'>";
+	conteudo += 					"</td>";
+	conteudo += 					"<td width='25%'>";
+	conteudo += 						"<button class='btn btn-block' onclick='mudarQdtItem(\"+\")'>";
+	conteudo += 							"<i class='fa fa-plus'></i>";
+	conteudo += 						"</button>";
+	conteudo += 					"</td>";
+	conteudo += 					"<td width='25%'>";
+	conteudo += 						"<button class='btn btn-block' onclick='mudarQdtItem(\"-\")'>";
+	conteudo += 							"<i class='fa fa-minus'></i>";
+	conteudo += 						"</button>";
+	conteudo += 					"</td>";
+	conteudo += 				"</tr>";
+	conteudo += 			"</table>";
+	conteudo += 		"</div>";
+	conteudo += 		"<div class='hidden col-sm-6 col-md-4' id='divViewGeralUnd'>";
+	conteudo += 			"Unidade Medida";
+	conteudo += 			"<div id='divSelectUnidade'></div>";
+	conteudo += 		"</div>";
+	conteudo += 		"<div class='col-sm-4'>";
+	conteudo += 			"Quantidade Principal";
+	conteudo += 			"<input type='text' class='form-control' id='qtdPrincipal' value='1' disabled>";
+	conteudo += 		"</div>";
+	conteudo += 		"<div class='col-sm-4'>";
+	conteudo += 			"Valor de Venda";
+	conteudo += 			"<input type='text' class='form-control' id='vlrVenda' disabled>";
+	conteudo += 		"</div>";
+	conteudo += 		"<div class='col-sm-4'>";
+	conteudo += 			"Total";
+	conteudo += 			"<input type='text' class='form-control' id='vlrTotal' disabled>";
+	conteudo += 		"</div>";
+	conteudo += 		"<div class='col-sm-4'>";
+	conteudo += 			"Estoque";
+	conteudo += 			"<input type='text' class='form-control' id='estoqueProduto' disabled>";
+	conteudo += 		"</div>";
+	conteudo += 	"</div>";
+
+	return conteudo;
+}

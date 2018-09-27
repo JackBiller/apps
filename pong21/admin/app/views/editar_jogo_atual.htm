@@ -1,0 +1,46 @@
+
+
+<h1>Editar: Jogo Atual</h1>
+
+<div class="text-right">
+	<a href="principal.php#!jogo_atual" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+<div class="col-md-4">
+	<br>Resultado &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="resultado_jogo_atual" accesskey="i"><option value='jog_1'>jog_1</option><option value='jog_2'>jog_2</option></select>
+</div>
+<div class="col-md-4">
+	<br>Ativo? &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="bool_ativo_jogo_atual" >
+		<option value="1" selected>Sim</option>
+		<option value="0">Não</option>
+	</select>
+</div>
+	<div class="col-md-12 text-center">
+		<br>
+		
+			<input type="hidden" id="data_atualizacao_jogo_atual">
+			<script>$("#data_atualizacao_jogo_atual").val("1")</script>
+			
+			<input type="hidden" id="usuario_id">
+			<script>$("#usuario_id").val($("#usuario").val())</script>
+			
+		<button class="btn btn-success" onclick='atualizarrRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Atualizar
+		</button>
+	</div>
+</div>
+
+<script type="text/javascript">
+	verificaAcess('jogo_atual');
+
+	
+</script>
+
+<script type="text/javascript" src="app/js/ajax/ajax_editar_jogo_atual.js"></script>
+
+<div id="scriptsAdicionais"></div>

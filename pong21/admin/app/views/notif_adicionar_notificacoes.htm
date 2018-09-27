@@ -1,0 +1,58 @@
+
+<h1>Adicionar: Notificações Config</h1>
+
+<div class="text-right">
+	<a href="principal.php#!notif_lista_config" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+
+	<div class="col-md-4">
+		<br>Aréa &nbsp;&nbsp;<span style='color: red'>*</span>
+		<div id="areasListadasDiv"></div>
+	</div>
+
+	<div class="col-md-8">
+		<br>Tipo de Atividades &nbsp;&nbsp;<span style='color: red'>*</span>
+		<table class="table" align="center">
+			<tr>
+				<td><b>Operação</b></td>
+				<td><b></b></td><!-- Selecionar -->
+			</tr>
+			<tr id="linha_I" bgcolor="#5cb85c" style="color: white;" onclick="selecionarColuna('I')">
+				<td>Inserção</td>
+				<td align="right">
+					<div id="icone_I"><i class="fa fa-check"></i></div>
+					<input type="hidden" id="check_I" checked>
+					<input type="hidden"  name="atividade" value="I">
+				</td>
+			</tr>
+			<tr id="linha_U" bgcolor="#5cb85c" style="color: white;" onclick="selecionarColuna('U')">
+				<td>Atualização</td>
+				<td align="right">
+					<div id="icone_U"><i class="fa fa-check"></i></div>
+					<input type="hidden" id="check_U" checked>
+					<input type="hidden"  name="atividade" value="U">
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="col-md-12 text-center">
+		<br>
+		<input type="hidden" id="usuario_id">
+		<script>$("#usuario_id").val($("#usuario").val())</script>
+
+		<button class="btn btn-success" onclick='gravarRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Gravar
+		</button>
+	</div>
+</div>
+
+<script type="text/javascript">
+	verificaAcess('notif');
+</script>
+
+<script type="text/javascript" src="app/js/ajax/notif_ajax_adicionar_notificacoes.js"></script>

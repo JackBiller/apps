@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Admin CDI</title>
+	<link rel='shortcut icon' href="dist/img/icone.ico" />
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+	<!-- iCheck -->
+	<link rel="stylesheet" href="plugins/iCheck/square/blue.css">
+
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- Google Font -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box" style="/*margin-top: 5px;*/">
+	<div class="login-box-body">
+		<p class="login-box-msg">Admin CDI</p>
+
+		<form id="formLogin" action="#" method="post">
+
+			<div id="conteudoLoginEmpresa">
+
+			Autenticação de Empresa
+			<div class="form-group has-feedback">
+				<input type="text" class="form-control" id='cnpj' placeholder="CNPJ" required>
+				<span class="glyphicon glyphicon-tag form-control-feedback"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<input type="password" class="form-control" id="senha_cnpj" placeholder="Senha CNPJ" required>
+				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+			</div>
+
+			</div>
+
+			<br>
+			Autenticação de Usuário
+			<div class="form-group has-feedback">
+				<input type="text" class="form-control" id='usuario' placeholder="Usuário" required>
+				<span class="glyphicon glyphicon-user form-control-feedback"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<input type="password" class="form-control" id="senha" placeholder="Senha" required>
+				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+			</div>
+			<div class="row">
+				<div class="col-xs-8">
+					<div class="checkbox icheck">
+						<!-- <label><input type="checkbox"> Remember Me</label> -->
+					</div>
+				</div>
+				<!-- /.col -->
+				<div class="col-xs-4">
+					<button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
+				</div>
+				<!-- /.col -->
+			</div>
+		</form>
+
+		<!-- <div class="social-auth-links text-center">
+			<p>- OR -</p>
+			<a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+				Facebook</a>
+			<a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
+				Google+</a>
+		</div> -->
+		<!-- /.social-auth-links -->
+
+		<!-- <a href="#">I forgot my password</a><br> -->
+		<!-- <a href="register.html" class="text-center">Register a new membership</a> -->
+
+	</div>
+	<!-- /.login-box-body -->
+
+	<div class="login-logo" style="margin-top: 30px;">
+		<img src="dist/img/Logo.png" width="100%">
+		<!-- <a href="index2.html"><b>Admin</b>LTE</a> -->
+	</div>
+	<!-- /.login-logo -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 3 -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- iCheck -->
+<script src="plugins/iCheck/icheck.min.js"></script>
+<script>
+	var caminhoRequisicao = "http://cdiinfo.com.br/aplicacoes_web/";
+	var caminhoRequisicaoCDI = "http://cdiinfo.com.br/";
+
+
+	var empresa_Global = "";
+
+	$(function () {
+		logarAutomatico();
+		validarLoginEmpresa();
+		$('input').iCheck({
+			checkboxClass: 'icheckbox_square-blue',
+			radioClass: 'iradio_square-blue',
+			increaseArea: '20%' /* optional */
+		});
+	});
+
+	$("#formLogin").submit( function(ex){
+		ex.preventDefault();
+
+		var cnpj = $("#cnpj").val();
+		var senha_cnpj = $("#senha_cnpj").val();
+
+		if (
+			   !localStorage.empresa_Global
+			&& cnpj	!= ""		 
+			&& senha_cnpj != ""
+		) {
+			$.ajax({
+				url: caminhoRequisicaoCDI + "controllers/login2.php",
+				type: "POST",
+				dataType: "text",
+				data: {
+					"login": cnpj,
+					"senha": senha_cnpj
+				},
+				error: function(){
+					console.log("Error: " + caminhoRequisicaoCDI + "controllers/login2.php");
+				}
+			}).done( function(data){
+				console.log(data);
+				try {
+					var empresa = JSON.parse(data);
+					empresa_Global = JSON.parse(data);
+					console.log(JSON.parse(data));
+					localStorage.setItem("empresa_Global", data);
+					validarLoginEmpresa();
+					logarSistema();
+				} catch(erro){
+					alert("Login de empresa inválido!");
+					localStorage.removeItem("empresa_Global");
+				}
+			});
+		} else if( localStorage.empresa_Global ){
+			empresa_Global = JSON.parse(localStorage.getItem("empresa_Global"));
+			logarSistema();
+		} else {
+			alert("Preencha todos os campos!");
+		}
+	});
+
+
+	function logarSistema(){
+		var usuario = $("#usuario").val();
+		var senha = $("#senha").val();
+
+		if (usuario != "" && senha != "") {
+
+			$.ajax({
+				url: caminhoRequisicao + "orcamento/controllers/login.php",
+				type: "POST",
+				dataType: "text",
+				data: {
+					"logarSistema": true,
+					"login": usuario,
+					"senha": senha,
+					'codigo_empresa': empresa_Global.CODIGO
+				},
+				error: function(){
+					console.log("Error: " + caminhoRequisicao + "orcamento/controllers/login.php");
+				}
+			}).done( function(data){
+				console.log(data);
+				try{
+					usuario_Global = JSON.parse(data);
+					console.log(usuario_Global);
+					if (usuario_Global.status != 0) {
+						localStorage.setItem("usuario_Global", data);
+						/* 		getItem 					:: 		Para pegar o valor do localStorage		 */
+						/* 		if(localStorage.login) 		:: 		Verifica se existe este localStorage	 */
+						window.location.assign("principal.html");
+					} else {
+						alert("Login inválido!");
+					}
+				} catch(erro){
+					alert("Login inválido!");
+				}
+			});
+		} else {
+			alert("Preencha todos os campos!");
+		}
+	}
+
+
+
+	function validarLoginEmpresa(){
+		if(localStorage.empresa_Global){
+			try{
+				var empresa = JSON.parse( localStorage.getItem("empresa_Global") );
+
+				var conteudo = "";
+				conteudo += "<div class='text-center'>" + empresa.RAZAOSOCIAL + "</div>"
+						 + 	"<br>"
+						 +	"<div class=\"row\">"
+						 +		"<div class=\"col-xs-6\">"
+						 +			"<div class=\"checkbox icheck\">"
+						 +			"</div>"
+						 +		"</div>"
+						 +		"<div class=\"col-xs-6\">"
+						 +			"<button onclick='chamarAutencicacaoEmpresa()' class=\"btn btn-primary btn-block btn-flat\">"
+						 + 				"Trocar empresa"
+						 + 			"</button>"
+						 +		"</div>"
+						 +	"</div>";
+				$("#conteudoLoginEmpresa").html(conteudo);
+				// document.getElementById("conteudoLoginEmpresa").style.display = "none";
+			} catch(erro){
+				console.log(erro);
+				localStorage.removeItem("empresa_Global");
+			}
+		}
+	}
+
+	function logarAutomatico(){
+		if (localStorage.usuario_Global && localStorage.empresa_Global) {
+			window.location.assign("principal.html");
+		}
+	}
+
+	function chamarAutencicacaoEmpresa(){
+		localStorage.removeItem("empresa_Global");
+		$("#conteudoLoginEmpresa").html(
+				"Autenticação de Empresa"
+			 + 	"<div class=\"form-group has-feedback\">"
+			 + 		"<input type=\"text\" class=\"form-control\" id='cnpj' placeholder=\"CNPJ\" required>"
+			 + 		"<span class=\"glyphicon glyphicon-tag form-control-feedback\"></span>"
+			 + 	"</div>"
+			 +  	"<div class=\"form-group has-feedback\">"
+			 +  		"<input type=\"password\" class=\"form-control\" id=\"senha_cnpj\" placeholder=\"Senha CNPJ\" required>"
+			 + 		"<span class=\"glyphicon glyphicon-lock form-control-feedback\"></span>"
+			 + 	"</div>"
+		);
+	}
+</script>
+
+
+
+<script type="text/javascript">
+/*
+	$.get("IP do ESP8266", {"sr1", angulo});
+
+	$.ajax({
+		url: "IP do ESP8266",
+		type: "GET",
+		dataType: "text",
+		data: {"sr1": angulo},
+		error: function(){
+			alert('Falha na requisição!');
+		}
+	}).done( function(data){
+		console.log(data);
+		alert("Moveu o servo");
+	});
+*/
+</script>
+</body>
+</html>

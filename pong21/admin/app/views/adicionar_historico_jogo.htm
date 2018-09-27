@@ -1,0 +1,56 @@
+
+
+<h1>Adicionar: Historico Jogo</h1>
+
+<div class="text-right">
+	<a href="principal.php#!historico_jogo" class="btn btn-primary" accesskey="v">
+		<i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;Voltar
+	</a>
+</div>
+<br>
+<div class="row">
+<div class="col-md-4">
+	<br>Sequencia &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="number" class="form-control" id="sequencia_historico_jogo" onkeyup="limitarValorNum('sequencia_historico_jogo', 11)"  accesskey="i">
+</div>
+<div class="col-md-4">
+	<br>Placar &nbsp;&nbsp;<span style='color: red'>*</span>
+	<input type="text" maxlength="200" class="form-control" id="placar_historico_jogo" >
+</div>
+<div class="col-md-4">
+	<br>Jogos &nbsp;&nbsp;<span style='color: red'>*</span>
+	<div id="jogosDiv">
+		<input type="text" value="Aguardando seleção..." class="form-control" disabled>
+	</div>
+</div>
+<div class="col-md-4">
+	<br>Ativo? &nbsp;&nbsp;<span style='color: red'>*</span>
+	<select class="form-control" id="bool_ativo_historico_jogo" >
+		<option value="1" selected>Sim</option>
+		<option value="0">Não</option>
+	</select>
+</div>
+	<div class="col-md-12 text-center">
+		<br>
+		
+			<input type="hidden" id="data_atualizacao_historico_jogo">
+			<script>$("#data_atualizacao_historico_jogo").val("1")</script>
+			
+			<input type="hidden" id="usuario_id">
+			<script>$("#usuario_id").val($("#usuario").val())</script>
+			
+		<button class="btn btn-success" onclick='gravarRegistro()' accesskey="s">
+			<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Gravar
+		</button>
+	</div>
+</div>
+
+<script type="text/javascript">
+	verificaAcess('historico_jogo');
+
+	
+</script>
+
+<script type="text/javascript" src="app/js/ajax/ajax_adicionar_historico_jogo.js"></script>
+
+<script type="text/javascript" src="app/js/combo/jogosCombo.js"></script>

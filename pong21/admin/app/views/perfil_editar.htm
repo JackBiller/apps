@@ -1,0 +1,89 @@
+
+<br>
+<h1>Editar Perfil</h1>
+<br>
+
+
+<div class="col-md-4">
+	<br>Nome Perfil
+	<input type="text" maxlength="200" class="form-control" id="nomePerfil">
+</div>
+	
+
+<div class="col-md-12 text-center">
+	<br>
+	<button class="btn btn-success" onclick="salvarPerfil();" accesskey="s">
+		<i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Gravar
+	</button>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var id_usuario = "";
+		var nome_usuario = "";
+		var login_usuario = "";
+		var senha_usuario = "";
+		var bool_ativo_usuario = "";
+
+		var vetor = [];
+		$.ajax({
+			url:'app/controllers/funcoes_usuarioController.php',
+			type: 'POST',
+			dataType: 'text',
+			data: { 
+				'pequisa_usuario_id': true,
+				'id': $("#usuario").val()
+			}
+		}).done( function(data){
+			vetor = data.split("{,}");
+
+			id_usuario = vetor[0];
+
+			nome_usuario = vetor[1];
+			login_usuario = vetor[2];
+			senha_usuario = vetor[3];
+			bool_ativo_usuario = vetor[4];
+
+			$("#nomePerfil").val(nome_usuario);
+		
+		});
+	});
+
+
+	function salvarPerfil(){
+		var campoFocus = "";
+			 if(validation($("#nomePerfil").val() == "")) campoFocus = "nomePerfil";
+
+		else {
+			$.ajax({
+				url:'app/controllers/funcoesController.php',
+				type: 'POST',
+				dataType: 'text',
+				data: {
+					'alterarPerfil': true,
+					'id_usuario': $("#usuario").val(),
+					'table': "usuario",
+					'nome': $("#nomePerfil").val()
+				}
+			}).done( function(data){
+				console.log(data);
+				if (data != 1 && data != "1") 	toast.danger("Falha ao Gravar!");
+				else {
+					toast.success("Gravado com sucesso!");
+					$("#nomeLogado").html($("#nomePerfil").val());
+				}
+			});
+		} 
+
+		if (campoFocus != "") {
+			document.getElementById(campoFocus).focus();
+			toast.danger('Preencha no mínimo todos os campos obrigatórios!');
+		}
+	}
+
+	function validation(valor){
+		if (valor == "") 	return false;
+		else 				return true;
+	}
+
+</script>

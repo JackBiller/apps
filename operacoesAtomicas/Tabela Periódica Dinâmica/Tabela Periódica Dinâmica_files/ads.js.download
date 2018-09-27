@@ -1,0 +1,4 @@
+var ad = document.createElement("div");
+ad.id = "ExtOarJars";
+ad.style.display = "none";
+document.body.appendChild(ad);
