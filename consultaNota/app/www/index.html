@@ -48,7 +48,7 @@
 				<input type="tel" id='metricula'>
 			</td>
 			<td width="30%">
-				<button class="btn btn-block btn-success">
+				<button class="btn btn-block btn-success" onclick="consultar()">
 					<i class="fa fa-search"></i> Consultar
 				</button>
 			</td>
@@ -64,19 +64,22 @@
 	<div id="bimestre4"></div>
 
 	<script>
+		var bimestre = 0;
 		function consultar(){
 			for (var i = 1; i <= 4; i++) {
 				$.ajax({
-					url: "site pelicano",
-					type: 'POST',
+					url: "http://www.pelicano.itstelecom.com.br/form_mostra_boletim.php",
+					type: 'GET',
 					dataType: 'text',
 					data: {
-						bimestre: i,
-						matricula: $("#metricula").val()
+						"teste": i,
+						"busca": $("#metricula").val()
 					}
 				}).done(function(data){
 					console.log(data);
-					$("#bimestre" + i).html(data);
+					bimestre++;
+					if(bimestre > 4) bimestre = 1;
+					$("#bimestre" + bimestre).html(data);
 
 					/*$( "p" ).html( "texto em html" ).find( "span" ).hover(
 						function() {
